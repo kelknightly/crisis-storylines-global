@@ -1,15 +1,15 @@
 """
 03_generate_insights.py
-Generates pre-computed AI insights using LanceDB (semantic search) and Claude.
+Generates pre-computed AI insights using LanceDB (semantic search) and Gemini.
 
 This script runs ONCE offline. All AI-generated outputs are stored in public/data/insights.json
 and served statically — no runtime LLM calls occur in the web application.
 
 Requirements:
-  - ANTHROPIC_API_KEY set in environment or .env file
+  - GEMINI_API_KEY set in environment or .env file
   - public/data/triplets_global.json must exist (run 02_preprocess.py first)
 
-LLM: claude-3-5-sonnet-20241022 (Anthropic)
+LLM: gemini-2.5-flash (Google AI Studio)
 Embeddings: sentence-transformers/all-MiniLM-L6-v2
 Retrieval: LanceDB (in-memory, no persistence needed)
 
@@ -31,9 +31,9 @@ from tqdm import tqdm
 load_dotenv()
 
 try:
-    import anthropic
+    import google.generativeai as genai
 except ImportError:
-    print("✗ anthropic package not installed. Run: pip install anthropic")
+    print("✗ google-generativeai package not installed. Run: pip install google-generativeai")
     sys.exit(1)
 
 # ---------------------------------------------------------------------------
@@ -41,7 +41,7 @@ except ImportError:
 # ---------------------------------------------------------------------------
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "public" / "data"
-MODEL_NAME = "claude-3-5-sonnet-20241022"
+MODEL_NAME = "gemini-2.5-flash"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 TOP_K = 20
 MAX_TOKENS = 800
@@ -219,15 +219,10 @@ def build_context(triplets: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def call_claude(client: "anthropic.Anthropic", question: str, context: str) -> str:
+def call_gemini(model: "genai.GenerativeModel", question: str, context: str) -> str:
     user_msg = f"Context (retrieved causal triplets from crisesStorylinesRAG dataset):\n\n{context}\n\nQuestion: {question}"
-    response = client.messages.create(
-        model=MODEL_NAME,
-        max_tokens=MAX_TOKENS,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_msg}],
-    )
-    return response.content[0].text
+    response = model.generate_content(user_msg)
+    return response.text
 
 
 def cross_ref_validation(triplets: list[dict], val_data: dict) -> tuple[float, str]:
@@ -262,13 +257,18 @@ def main() -> None:
     print(f"Questions: {len(QUESTIONS)}")
     print("=" * 60)
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        print("\n✗ ANTHROPIC_API_KEY not set.")
-        print("  Create a .env file with: ANTHROPIC_API_KEY=your-key-here")
+        print("\n✗ GEMINI_API_KEY not set.")
+        print("  Create a .env file with: GEMINI_API_KEY=your-key-here")
         sys.exit(1)
 
-    client = anthropic.Anthropic(api_key=api_key)
+    genai.configure(api_key=api_key)
+    gemini_model = genai.GenerativeModel(
+        model_name=MODEL_NAME,
+        system_instruction=SYSTEM_PROMPT,
+        generation_config=genai.GenerationConfig(max_output_tokens=MAX_TOKENS),
+    )
 
     # Load data
     print("\nLoading triplets …")
@@ -312,7 +312,7 @@ def main() -> None:
                 TOP_K, q.get("filter")
             )
             context = build_context(retrieved)
-            narrative = call_claude(client, q["question"], context)
+            narrative = call_gemini(gemini_model, q["question"], context)
             total_api_calls += 1
 
             confidence_score, confidence_label = cross_ref_validation(retrieved, val_data)
@@ -348,7 +348,6 @@ def main() -> None:
                 "modelVersion": MODEL_NAME,
                 "runTimestamp": run_ts,
                 "tripletsRetrievedCount": len(retrieved),
-                "systemPrompt": SYSTEM_PROMPT,
                 "relatedDisasterTypes": related_types,
                 "relatedRegions": related_regions,
             })
@@ -359,7 +358,7 @@ def main() -> None:
             insights_out.append({
                 "id": q["id"],
                 "question": q["question"],
-                "narrative": f"Insight generation failed: {e}",
+                "narrative": "Insight generation unavailable.",
                 "evidenceTriplets": [],
                 "confidenceScore": 0.0,
                 "confidenceLabel": "Model Generated",
@@ -367,7 +366,6 @@ def main() -> None:
                 "modelVersion": MODEL_NAME,
                 "runTimestamp": run_ts,
                 "tripletsRetrievedCount": 0,
-                "systemPrompt": SYSTEM_PROMPT,
                 "relatedDisasterTypes": [],
                 "relatedRegions": [],
             })
@@ -380,7 +378,6 @@ def main() -> None:
         "embeddingModel": EMBEDDING_MODEL,
         "topK": TOP_K,
         "totalApiCalls": total_api_calls,
-        "systemPrompt": SYSTEM_PROMPT,
         "insights": insights_out,
     }
 

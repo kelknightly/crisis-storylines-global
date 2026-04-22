@@ -1,1 +1,2228 @@
-{"generatedAt":"2026-04-22T01:16:45Z","model":"claude-sonnet-4-5 (via GitHub Copilot)","modelVersion":"claude-sonnet-4-5","embeddingModel":"none (direct evidence synthesis)","topK":0,"totalApiCalls":0,"note":"Insights generated directly from full triplet dataset statistics rather than RAG retrieval. All figures are counts from public/data/triplets_global.json (24,954 triplets, 3,158 events, 2014–2024).","systemPrompt":"You are an expert in Disaster Risk Management and global hazard analysis. You are analysing data from the crisesStorylinesRAG dataset (Ronco et al., 2026), which contains causal knowledge graph triplets extracted from 10 years (2014–2024) of global disaster news using large language models.\n\nYour task is to answer the question using ONLY the retrieved triplets and evidence provided in the context. Do not make claims that are not supported by the data. If the evidence is insufficient for a strong conclusion, say so explicitly.\n\nStructure your response as 2–3 clear paragraphs of clear, precise prose. Reference specific causal relationships from the triplets where relevant. Be precise about geographic scope, disaster type, and time period. Do not hallucinate beyond what the data shows.","insights":[{"id":"q01","question":"What are the most common causal drivers of infrastructure damage across all disaster types?","narrative":"Across all 3,158 events in the dataset, infrastructure damage is the single most frequent impact in the causal knowledge graph, appearing as a target in 2,473 triplets. The dominant drivers are hydrological: flooding (3,226 source appearances), heavy rain (545), and heavy rainfall (465) collectively account for the largest share of infrastructure damage chains. Storm events generate 6,558 triplets in total, with storms causing infrastructure damage through both direct wind loading and secondary flooding — the triplet storm→causes→flooding appears 194 times, making storm-induced inundation a key cascade pathway.\n\nSeismic hazards form the second major pathway. The earthquake node appears as a causal driver 878 times, with infrastructure damage as the most common downstream consequence. Earthquake→causes→landslide appears 13 times and earthquake→causes→tsunami 6 times, indicating documented multi-hazard chains, though these are likely under-counted given that not all cascades are captured in individual event news coverage.\n\nThe prevalence of infrastructure damage as an impact — ahead of fatalities (2,295 triplets) and economic damage (1,734) — reflects a consistent pattern across disaster types and regions: physical infrastructure is the primary transmission pathway through which hazards translate into human and economic harm.","confidence":0.91,"disasterTypes":["Flood","Storm","Earthquake","Wildfire","Mass movement (wet)"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"earthquake","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"storm","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"heavy rain","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"wildfire","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":2473,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q02","question":"Which disaster types generate the highest ratio of 'prevents' to 'causes' triplets, suggesting more documented mitigation?","narrative":"Of the 24,954 triplets in the dataset, 17,718 (71%) record causal chains and 7,236 (29%) record prevention or mitigation relationships. Flood events generate the most triplets overall (7,987), with early warning (315 occurrences as a prevention source) and evacuation (136) as the dominant mitigation measures documented. Storm events follow with 6,558 triplets, where early warning (211) and evacuation (144) again dominate, reflecting the lead-time advantage that meteorological forecasting affords for both hazard types.\n\nEarthquake events show a notably different pattern: early warning appears only 45 times as a prevention measure, while emergency response (27) and evacuation (25) dominate — reflecting the retrospective nature of earthquake response given the absence of reliable short-term precursors. Epidemic events (711 triplets) show prevention heavily weighted toward containment measures: isolation, quarantine, contact tracing, and surveillance all appear frequently, consistent with infectious disease control protocols.\n\nThe overall 71:29 causes-to-prevents ratio suggests that the dataset captures significantly more hazard chains than mitigation pathways. This likely reflects a media bias: news coverage of disasters focuses on what went wrong rather than what was done to reduce harm. The prevention evidence that does exist is concentrated in the highest-profile, highest-frequency hazard types where operational systems (meteorological early warning, evacuation plans) are most developed.","confidence":0.84,"disasterTypes":["Flood","Storm","Epidemic","Earthquake"],"evidenceTriplets":[{"source":"early warning","relation":"prevents","target":"casualties","eventId":"global","expertVerified":false},{"source":"evacuation","relation":"prevents","target":"fatalities","eventId":"global","expertVerified":false},{"source":"isolation","relation":"prevents","target":"further contamination","eventId":"global","expertVerified":false},{"source":"emergency response","relation":"prevents","target":"casualties","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":7236,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q03","question":"What multi-hazard cascade chains are most frequently documented in the dataset?","narrative":"The dataset contains clear evidence of multi-hazard cascades across three main pathways. The most documented is the hydrological cascade: storm→causes→flooding appears 194 times, flooding→causes→landslide appears 40 times, and flooding→causes→disease/cholera/outbreak appears 77 times. These triplets together describe a three-stage chain — precipitation event → inundation → secondary biological hazard — that is particularly prevalent in South and Southeast Asian events where monsoon conditions amplify cascade potential.\n\nThe seismic cascade is the second major pattern: earthquake→causes→landslide (13 triplets) and earthquake→causes→tsunami (6 triplets) are documented, though both are likely under-represented because cascade documentation in news coverage depends on journalists explicitly attributing secondary hazards to the primary event. Power outage cascades are also frequent: storm→causes→power outage appears 63 times, with power failures then driving downstream consequences (hospital failures, economic disruption) in many event narratives.\n\nIt is important to note that these cascade counts reflect documented co-occurrence within individual event news reports, not statistical correlation across the full dataset. Events with more news coverage (high-profile disasters in better-resourced countries) will generate more cascade triplets. The data should be interpreted as evidence of cascade pathways that journalists and responders have explicitly articulated, not as a complete inventory of all multi-hazard interactions in the 2014–2024 period.","confidence":0.82,"disasterTypes":["Flood","Storm","Earthquake","Epidemic"],"evidenceTriplets":[{"source":"storm","relation":"causes","target":"flooding","eventId":"global","expertVerified":false},{"source":"flooding","relation":"causes","target":"landslides","eventId":"global","expertVerified":false},{"source":"flooding","relation":"causes","target":"cholera","eventId":"global","expertVerified":false},{"source":"earthquake","relation":"causes","target":"tsunami","eventId":"global","expertVerified":false},{"source":"storm","relation":"causes","target":"power outages","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":340,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q04","question":"What prevention and mitigation measures are most frequently cited across the dataset?","narrative":"Early warning is the single most cited prevention measure in the entire dataset, appearing 655 times as the source of a 'prevents' triplet — nearly double the second-ranked measure, evacuation (361 occurrences). This dominance reflects the centrality of forecast-based action in the disaster management literature and in media coverage of well-managed disaster events. Early warning is cited across all major hazard types: floods (315 times), storms (211), and earthquakes (45), though the absolute gap between hydrological and seismic events reflects the maturity of meteorological forecasting systems relative to seismic early warning.\n\nThe third tier of prevention measures — emergency response (128), relief efforts (91), humanitarian aid (88), aid (76), medical aid (66), and early response (65) — are largely reactive rather than prospective. Their frequent appearance reflects that much of what the dataset records as 'prevention' is post-impact harm reduction rather than pre-event risk reduction. Relocation (67) and evacuation (361) are the primary population-movement measures.\n\nNotably absent from the top measures are structural or long-term interventions such as building codes, drainage infrastructure, land-use planning, or ecosystem-based adaptation. This absence is a data artefact: news reporting focuses on acute responses, not chronic risk governance. The dataset's prevention evidence should be read as a record of what responders do during and immediately after disasters, not a comprehensive inventory of the disaster risk reduction ecosystem.","confidence":0.88,"disasterTypes":["Flood","Storm","Earthquake","Epidemic"],"evidenceTriplets":[{"source":"early warning","relation":"prevents","target":"casualties","eventId":"global","expertVerified":false},{"source":"evacuation","relation":"prevents","target":"fatalities","eventId":"global","expertVerified":false},{"source":"emergency response","relation":"prevents","target":"casualties","eventId":"global","expertVerified":false},{"source":"humanitarian aid","relation":"prevents","target":"further suffering","eventId":"global","expertVerified":false},{"source":"relocation","relation":"prevents","target":"displacement","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":655,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q05","question":"Is there evidence in the causal triplets of changing disaster drivers over the 2014–2024 decade?","narrative":"Comparing the two ends of the decade is possible but must be treated with caution given differences in dataset coverage across years. In the early period (2014–2017), the top five causal drivers were flooding (889 triplets), earthquake (322), floods (172), heavy rain (156), and flood (123). In the late period (2022–2024), the same set dominates — flooding (1,153), heavy rainfall (208), heavy rain (195), floods (249), and earthquake (256) — but hydrological drivers show notably higher absolute counts relative to seismic ones.\n\nThe ratio of hydrological (flooding + floods + flood + heavy rain + heavy rainfall + flash floods) to seismic (earthquake) drivers shifts from approximately 4.3:1 in the early period to approximately 5.0:1 in the late period. While this is consistent with documented trends in hydro-meteorological hazard intensification, the dataset cannot isolate whether this reflects a real-world change in hazard frequency, increased news coverage of floods in the later period, or a change in the EMM source corpus. These alternative explanations cannot be distinguished from the triplet data alone.\n\nWhat the data does clearly show is that heavy rainfall emerges more prominently as an explicitly named driver in later years — appearing 208 times in 2022–2024 versus 156 in 2014–2017 — suggesting that weather attribution language has become more common in disaster reporting, consistent with the broader uptake of climate attribution science in journalism.","confidence":0.72,"disasterTypes":["Flood","Storm","Earthquake"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"heavy rainfall","relation":"causes","target":"flooding","eventId":"global","expertVerified":false},{"source":"earthquake","relation":"causes","target":"fatalities","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":3458,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q06","question":"What are the most common impacts specifically linked to wildfire events?","narrative":"Wildfire events generate 1,103 triplets in the dataset, representing the fifth largest hazard type by triplet count. The dominant causal driver node is wildfire (314 appearances as a source), with air quality degradation, evacuation pressure, infrastructure damage, property damage, and fatalities as the most frequently documented downstream impacts. The wildfire→causes→evacuation chain is particularly well-documented, reflecting the rapid large-area population movement that characterises major wildfire events in North America and Europe.\n\nWildfire triplets are geographically concentrated in two regions: North America (primarily US and Canada) and Europe (primarily southern Europe). This geographic concentration reflects both the actual distribution of large wildfire events in the dataset period and the media coverage bias of the European Media Monitor, which over-represents events in regions with strong European-language press.\n\nPrevention measures in wildfire events are sparse compared to flood and storm events: early warning appears as a prevention source far less frequently, with prescribed burning, firebreaks, and land management measures almost entirely absent. This is another data artefact — structural fire risk management is rarely the subject of news coverage at the time of an event. The prevention evidence that does exist centres on evacuation orders and emergency response, consistent with the reactive framing of wildfire coverage.","confidence":0.81,"disasterTypes":["Wildfire"],"evidenceTriplets":[{"source":"wildfire","relation":"causes","target":"evacuation","eventId":"global","expertVerified":false},{"source":"wildfire","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"wildfire","relation":"causes","target":"fatalities","eventId":"global","expertVerified":false},{"source":"early warning","relation":"prevents","target":"casualties","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":1103,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q07","question":"How do causal impact patterns differ across world regions?","narrative":"Regional comparison across the dataset reveals both universal patterns and meaningful differences. Infrastructure damage and fatalities are the top two impacts in every region. However, the relative weighting differs: in South Asia (3,952 triplets) fatalities rank first (425 triplets) ahead of infrastructure damage (360), suggesting that mortality is the primary documented consequence in South Asian disaster reporting. In Europe (1,988 triplets), the order reverses — infrastructure damage (199) exceeds fatalities (167) — consistent with stronger social protection systems and lower case fatality rates in European events.\n\nSub-Saharan Africa (3,810 triplets) shows a pattern closer to South Asia, with fatalities (351) and infrastructure damage (274) as the dominant impacts, but also with economic damage (256) and flooding (240) as secondary nodes — the latter reflecting the prevalence of compound flood events. The Latin America & Caribbean region (2,630 triplets) shows elevated displacement counts relative to other regions, consistent with the combination of seismic, volcanic, and hydro-meteorological hazards that characterise Central American and Caribbean events.\n\nThese regional patterns must be interpreted cautiously. Differences in triplet counts between regions partly reflect differences in news coverage intensity rather than differences in actual disaster frequency or impact. South Asia and Southeast Asia having the highest triplet counts (3,952 and 3,950 respectively) is consistent with their high disaster frequency, but is also influenced by the volume of English-language reporting on major events like Pakistan floods and Indonesian earthquakes.","confidence":0.79,"disasterTypes":["Flood","Storm","Earthquake","Epidemic"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"fatalities","eventId":"global","expertVerified":false},{"source":"earthquake","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"flooding","relation":"causes","target":"displacement","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":3952,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q08","question":"What causal factors are most strongly linked to mass displacement events?","narrative":"Displacement appears 428 times as a target in 'causes' triplets across the full dataset — the sixth most common impact after infrastructure damage, fatalities, economic damage, flooding, and injuries. The primary causal drivers of displacement are flooding (the most common source across all relations), wildfire, and storm events, reflecting the large-area spatial extent of these hazards and their rapid-onset nature that requires population movement.\n\nFlood-driven displacement is particularly documented in South Asia and Sub-Saharan Africa events, where the combination of limited flood defences, high population density in floodplains, and inadequate early warning systems creates conditions for large-scale displacement. Wildfire-driven displacement is concentrated in North American and European events and is characterised by different dynamics — faster onset, higher evacuation compliance rates, but also higher rates of return once conditions permit.\n\nThe dataset also shows that displacement is frequently a node in prevention chains as well: evacuation prevents fatalities 361 times in 'prevents' triplets, suggesting that managed displacement (evacuation) is distinguished from unmanaged displacement as an impact. This dual role of displacement/evacuation — sometimes a harm, sometimes a harm-reduction measure — reflects the complexity of population movement in disaster contexts and is an important nuance for any policy interpretation of the data.","confidence":0.80,"disasterTypes":["Flood","Storm","Wildfire"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"displacement","eventId":"global","expertVerified":false},{"source":"wildfire","relation":"causes","target":"evacuation","eventId":"global","expertVerified":false},{"source":"evacuation","relation":"prevents","target":"fatalities","eventId":"global","expertVerified":false},{"source":"storm","relation":"causes","target":"displacement","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":428,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q09","question":"What does the expert validation data reveal about the reliability of LLM-extracted causal triplets?","narrative":"The expert validation sample of 1,000 triplets annotated by six independent disaster-management experts provides the most direct evidence of the dataset's reliability. The validation.json file records precision estimates by disaster type and by relation type (causes vs. prevents). Across the full sample, the overall expert-validated precision indicates that a substantial majority of LLM-extracted triplets are judged accurate by domain experts, with some variation by hazard type.\n\nRelation-level analysis shows that 'causes' triplets tend to have higher precision than 'prevents' triplets, which is consistent with the expectation that causal attribution is more frequently and explicitly stated in news text than mitigation attribution. Disaster types with more standardised causal language in reporting (earthquakes, floods) tend to score higher than more complex or context-dependent disaster types.\n\nThe disputed triplets — those where annotators disagreed — concentrate in cases where causal language in the source text was ambiguous, where the LLM conflated correlation with causation, or where the triplet was technically accurate but removed important contextual caveats. These patterns are documented in the Audit page of this dashboard and should be consulted before drawing strong conclusions from any individual triplet. The aggregate statistics shown in this dashboard are more robust than individual triplet-level claims.","confidence":0.87,"disasterTypes":["Flood","Storm","Earthquake","Epidemic","Wildfire"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":true},{"source":"early warning","relation":"prevents","target":"casualties","eventId":"global","expertVerified":true}],"tripletsRetrievedCount":1000,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q10","question":"What causal drivers are most linked to economic damage across disaster types?","narrative":"Economic damage appears 1,734 times as a target in 'causes' triplets — the third most common impact in the dataset after infrastructure damage and fatalities. Flooding is the dominant causal driver of economic damage, consistent with its position as the most frequent hazard type and the high asset exposure in flood-prone areas. Storm events are the second major source, with storm→causes→economic damage appearing frequently in both North American and Southeast Asian event records.\n\nThe geographic distribution of economic damage triplets is notable: North America (3,038 total triplets) generates a high proportion of economic damage records relative to its event count, reflecting the high asset values and consequently high economic losses in US and Canadian disaster events. This stands in contrast to Sub-Saharan Africa, where mortality and displacement dominate the impact profile despite high event frequency, suggesting either lower monetised losses or differential reporting practices.\n\nCrop devastation (258 triplets as a target) is a significant secondary economic impact that is primarily driven by flooding and drought. The drought pathway — drought→causes→crop devastation→causes→food insecurity — represents one of the most policy-relevant cascade chains in the dataset, particularly for Sub-Saharan African and South Asian contexts. However, drought events are under-represented in the dataset (only 32 events) relative to their global impact, reflecting the chronic slow-onset nature of drought that is less amenable to event-level news reporting.","confidence":0.83,"disasterTypes":["Flood","Storm","Drought","Earthquake"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"economic damage","eventId":"global","expertVerified":false},{"source":"storm","relation":"causes","target":"economic damage","eventId":"global","expertVerified":false},{"source":"flooding","relation":"causes","target":"crop devastation","eventId":"global","expertVerified":false},{"source":"drought","relation":"causes","target":"crop devastation","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":1734,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q11","question":"What patterns emerge in epidemic and disease outbreak causation?","narrative":"Epidemic events generate 711 triplets from 85 documented events in the dataset (2014–2024). The dominant causal driver is cholera-related: cholera outbreak (43 triplets), cholera (26), and cholera epidemic (18) are the top three named drivers, together accounting for over 12% of all epidemic causal triplets. Contaminated water (10 triplets) and contaminated food (10) also appear, linking the epidemic cascade to upstream water and sanitation failures that are themselves often driven by flood events — connecting epidemic outbreaks to the broader hydrological hazard cluster documented elsewhere in the dataset.\n\nCOVID-related entries (appearing as 'covid-' due to text truncation) contribute 11 triplets, a surprisingly small number given the scale of the 2020–2022 pandemic. This under-representation reflects the EMM-based sourcing strategy: the dataset covers events matched to EM-DAT records, and COVID-19 as a prolonged global event does not map neatly onto the discrete event structure of EM-DAT, resulting in sparse coverage relative to its actual impact.\n\nPrevention in epidemic events is characterised by containment measures: isolation, quarantine, contact tracing, surveillance, and international collaboration all appear in prevention triplets. These reflect the public health response toolkit and are more diverse than the prevention measures documented for geophysical hazards — suggesting that epidemic response benefits from a richer documented mitigation vocabulary in the news sources indexed by EMM.","confidence":0.85,"disasterTypes":["Epidemic"],"evidenceTriplets":[{"source":"cholera outbreak","relation":"causes","target":"fatalities","eventId":"global","expertVerified":false},{"source":"contaminated water","relation":"causes","target":"cholera","eventId":"global","expertVerified":false},{"source":"isolation","relation":"prevents","target":"further contamination","eventId":"global","expertVerified":false},{"source":"contact tracing","relation":"prevents","target":"further contamination","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":711,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"},{"id":"q12","question":"What are the key data gaps and limitations that users of this dataset should be aware of?","narrative":"Several systematic gaps are visible in the dataset's causal structure. First, drought is substantially under-represented: only 32 drought events generate drought-type triplets, despite drought being one of the highest-impact hazards globally by affected population. The dataset's reliance on news event records means that slow-onset hazards without a discrete triggering event are systematically excluded. Similarly, heat extremes (35 events) and glacial lake outburst floods (5 events) are sparse relative to their documented global importance.\n\nSecond, the geographic distribution of triplets (South Asia: 3,952; Southeast Asia: 3,950; Sub-Saharan Africa: 3,810) is driven partly by disaster frequency and partly by English-language media availability in the EMM corpus. Regions with lower English-language press coverage — Central Asia (288 triplets), parts of North Africa and the Middle East — will have systematically fewer causal chains documented, not because disasters are less common or complex, but because the news sourcing infrastructure is thinner.\n\nThird, the original LLM pipeline (llama-3.3-70b-instruct) has a documented error rate visible in the expert validation. The precision is highest for simple, frequently occurring causal chains and lowest for complex, context-dependent, or counterfactual relations. Users should treat individual triplets as indicative evidence rather than verified facts, and should rely on aggregate statistics — the frequency distributions, regional comparisons, and type-level patterns shown in this dashboard — rather than drawing conclusions from any single triplet or event.","confidence":0.93,"disasterTypes":["Flood","Storm","Earthquake","Drought","Epidemic","Wildfire"],"evidenceTriplets":[{"source":"flooding","relation":"causes","target":"infrastructure damage","eventId":"global","expertVerified":false},{"source":"drought","relation":"causes","target":"crop devastation","eventId":"global","expertVerified":false}],"tripletsRetrievedCount":24954,"runTimestamp":"2026-04-22T01:16:45Z","modelName":"claude-sonnet-4-5 (via GitHub Copilot)"}]}
+{
+  "generatedAt": "2026-04-22T01:35:10.252351+00:00",
+  "model": "gemini-2.5-flash",
+  "modelVersion": "gemini-2.5-flash",
+  "embeddingModel": "sentence-transformers/all-MiniLM-L6-v2",
+  "topK": 20,
+  "totalApiCalls": 12,
+  "insights": [
+    {
+      "id": "insight_01",
+      "question": "What are the most common human-caused drivers of floods globally?",
+      "narrative": "Based on the provided causal triplets from the crisesStorylinesRAG dataset (2014–2024), there is limited evidence regarding specific human",
+      "evidenceTriplets": [
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2018-0121-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2023-0285-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "human interventions",
+          "relation": "causes",
+          "target": "flooding",
+          "eventId": "2017-0243-PAK",
+          "disasterType": "Flood",
+          "country": "Pakistan",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2016-0179-FRA",
+          "disasterType": "Flood",
+          "country": "France",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "flood",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2017-0059-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "human activities",
+          "relation": "causes",
+          "target": "flooding",
+          "eventId": "2023-0582-TUR",
+          "disasterType": "Flood",
+          "country": "Türkiye",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "deaths",
+          "eventId": "2023-0785-USA",
+          "disasterType": "Flood",
+          "country": "United States",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2024-0299-DEU",
+          "disasterType": "Flood",
+          "country": "Germany",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2015-0185-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "disaster",
+          "eventId": "2017-0169-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "population affect",
+          "eventId": "2014-0164-HRV",
+          "disasterType": "Flood",
+          "country": "Croatia",
+          "year": 2014,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "deaths",
+          "eventId": "2022-0770-RWA",
+          "disasterType": "Flood",
+          "country": "Rwanda",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "diseases",
+          "eventId": "2019-0468-RUS",
+          "disasterType": "Flood",
+          "country": "Russian Federation",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2022-0361-USA",
+          "disasterType": "Flood",
+          "country": "United States",
+          "year": 2022,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.673,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 14,
+      "relatedDisasterTypes": [
+        "Flood"
+      ],
+      "relatedRegions": [
+        "North Africa & Middle East",
+        "North America",
+        "Southeast Asia",
+        "Sub-Saharan Africa",
+        "South Asia",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_02",
+      "question": "How do the primary causal drivers of floods in Southeast Asia compare to those in Europe?",
+      "narrative": "Based on the retrieved triplets from the crisesStorylinesRAG dataset:\n\nIn Southeast Asia, specifically Indonesia, heavy rain is identified as a causal driver of floods, as seen in a 2024 event (triplet 19: heavy rain → causes → floods). Another instance of a meteorological driver causing floods is noted in China, where rainstorms were linked to floods in 2015 (triplet 20: rainstorms → causes → floods).\n\nHowever, the provided evidence contains no information regarding flood events or their causal drivers in Europe. Therefore, a direct comparison of the primary causal drivers of floods between Southeast Asia and Europe cannot be made using only the given data. The available data is limited to highlighting meteorological factors like heavy rain and rainstorms as precursors to floods in parts of Asia.",
+      "evidenceTriplets": [
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2018-0121-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2022-0474-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2022-0305-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "deaths",
+          "eventId": "2023-0041-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "damage",
+          "eventId": "2023-0803-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "economic impact",
+          "eventId": "2020-0272-MYS",
+          "disasterType": "Flood",
+          "country": "Malaysia",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2023-0803-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "flood",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2017-0059-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "deaths",
+          "eventId": "2023-0854-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "disaster",
+          "eventId": "2017-0169-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "displacement",
+          "eventId": "2023-0041-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "flood",
+          "relation": "causes",
+          "target": "exposure",
+          "eventId": "2019-0578-MYS",
+          "disasterType": "Flood",
+          "country": "Malaysia",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "economic damage",
+          "eventId": "2022-0474-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "damage",
+          "eventId": "2022-0732-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2022-0732-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "tourism impact",
+          "eventId": "2020-0529-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "flood",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2014-0522-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2014,
+          "expertVerified": false
+        },
+        {
+          "source": "flooding",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2024-0628-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "heavy rain",
+          "relation": "causes",
+          "target": "floods",
+          "eventId": "2024-0204-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "rainstorms",
+          "relation": "causes",
+          "target": "floods",
+          "eventId": "2015-0533-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2015,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.673,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Flood"
+      ],
+      "relatedRegions": [
+        "East Asia & Pacific",
+        "Southeast Asia"
+      ]
+    },
+    {
+      "id": "insight_03",
+      "question": "What are the most repeated failure points in disaster response across all disaster types?",
+      "narrative": "Based on the provided causal triplets, there is insufficient evidence to identify \"most repeated\" failure points in disaster response across all disaster types. Each identified failure point appears only once in the dataset.\n\nSpecifically, the triplets highlight two distinct failure points:\n*   In 2018, organizational failures were identified as a cause of a rail disaster in India (Triplet 7).\n*   Also in 2018, ineffective response during a flood in Jordan led to fatalities (Triplet 8).\n\nWhile these examples demonstrate specific instances where failures contributed to negative outcomes, the dataset does not show any of these failure types recurring, thus preventing the identification of a 'most repeated' category.",
+      "evidenceTriplets": [
+        {
+          "source": "disaster prediction",
+          "relation": "prevents",
+          "target": "injuries",
+          "eventId": "2016-0229-PAK",
+          "disasterType": "Storm",
+          "country": "Pakistan",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster event",
+          "relation": "causes",
+          "target": "injuries",
+          "eventId": "2015-0118-BGD",
+          "disasterType": "Storm",
+          "country": "Bangladesh",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "community effects",
+          "eventId": "2017-0381-DOM",
+          "disasterType": "Storm",
+          "country": "Dominican Republic",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "infrastructure damage",
+          "eventId": "2017-0381-DOM",
+          "disasterType": "Storm",
+          "country": "Dominican Republic",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "secondary disaster",
+          "relation": "causes",
+          "target": "suspension of rescue",
+          "eventId": "2017-0044-CHN",
+          "disasterType": "Mass movement (wet)",
+          "country": "China",
+          "year": 2017,
+          "expertVerified": true
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2015-0193-NGA",
+          "disasterType": "Road",
+          "country": "Nigeria",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "organizational failures",
+          "relation": "causes",
+          "target": "disaster",
+          "eventId": "2018-0391-IND",
+          "disasterType": "Rail",
+          "country": "India",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "ineffective response",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2018-0414-JOR",
+          "disasterType": "Flood",
+          "country": "Jordan",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2018-0391-IND",
+          "disasterType": "Rail",
+          "country": "India",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "affected municipalities",
+          "eventId": "2019-0424-JPN",
+          "disasterType": "Storm",
+          "country": "Japan",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster preparedness",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2021-0411-DEU",
+          "disasterType": "Flood",
+          "country": "Germany",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster teams",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2015-0105-PHL",
+          "disasterType": "Storm",
+          "country": "Philippines",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "injuries",
+          "eventId": "2018-0391-IND",
+          "disasterType": "Rail",
+          "country": "India",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster management",
+          "relation": "prevents",
+          "target": "injuries",
+          "eventId": "2024-0185-ZAF",
+          "disasterType": "Fire (Miscellaneous)",
+          "country": "South Africa",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster control",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2016-0194-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster teams",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2016-0191-TJK",
+          "disasterType": "Flood",
+          "country": "Tajikistan",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster relief",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2019-0333-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster event",
+          "relation": "causes",
+          "target": "building damage",
+          "eventId": "2015-0118-BGD",
+          "disasterType": "Storm",
+          "country": "Bangladesh",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "state of natural disaster",
+          "relation": "prevents",
+          "target": "excess damage",
+          "eventId": "2019-0558-FRA",
+          "disasterType": "Storm",
+          "country": "France",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster resilient homes",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2024-0654-VNM",
+          "disasterType": "Storm",
+          "country": "Viet Nam",
+          "year": 2024,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.661,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Storm",
+        "Mass movement (wet)",
+        "Fire (Miscellaneous)",
+        "Road",
+        "Flood",
+        "Rail"
+      ],
+      "relatedRegions": [
+        "Central Asia",
+        "Southeast Asia",
+        "North Africa & Middle East",
+        "Latin America & Caribbean",
+        "Sub-Saharan Africa",
+        "South Asia",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_04",
+      "question": "What prevention and early warning measures are most commonly cited across all disaster types?",
+      "narrative": "Based on the provided triplets, there is no single prevention or early warning measure that is most commonly cited across all disaster types, as each distinct measure appears only once in the dataset.\n\nThe retrieved data identifies four different measures: \"disaster preparedness\" for a 2021 flood in Germany, \"early warning\" for a 2015 flood in the United States, \"disaster prevention\" for a 2017 flood in Thailand, and \"effective warning\" for a 2015 storm in the United States. All these measures are cited as preventing fatalities.\n\nGiven the limited scope of the provided triplets, it is not possible to conclude which specific prevention or early warning measure is most commonly cited overall, as each is mentioned precisely once.",
+      "evidenceTriplets": [
+        {
+          "source": "disaster preparedness",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2021-0411-DEU",
+          "disasterType": "Flood",
+          "country": "Germany",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "early warning",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2015-0431-USA",
+          "disasterType": "Flood",
+          "country": "United States",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster prevention",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2017-0465-THA",
+          "disasterType": "Flood",
+          "country": "Thailand",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "effective warning",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2015-0211-USA",
+          "disasterType": "Storm",
+          "country": "United States",
+          "year": 2015,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.667,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 4,
+      "relatedDisasterTypes": [
+        "Storm",
+        "Flood"
+      ],
+      "relatedRegions": [
+        "Europe",
+        "North America",
+        "Southeast Asia"
+      ]
+    },
+    {
+      "id": "insight_05",
+      "question": "What secondary hazards and cascade effects are most commonly triggered by earthquakes?",
+      "narrative": "Based on the provided crisesStorylinesRAG dataset triplets from 2014–2024, earthquakes primarily trigger direct human impacts and specific",
+      "evidenceTriplets": [
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2014-0318-USA",
+          "disasterType": "Earthquake",
+          "country": "United States",
+          "year": 2014,
+          "expertVerified": false
+        },
+        {
+          "source": "seismic activity",
+          "relation": "causes",
+          "target": "earthquake",
+          "eventId": "2020-0007-PRI",
+          "disasterType": "Earthquake",
+          "country": "Puerto Rico",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquakes",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2016-0107-JPN",
+          "disasterType": "Earthquake",
+          "country": "Japan",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "tsunami",
+          "eventId": "2015-0435-CHL",
+          "disasterType": "Earthquake",
+          "country": "Chile",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "infrastructure damage",
+          "eventId": "2016-0493-USA",
+          "disasterType": "Earthquake",
+          "country": "United States",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "fires",
+          "eventId": "2019-0306-USA",
+          "disasterType": "Earthquake",
+          "country": "United States",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "panic",
+          "eventId": "2014-0127-MEX",
+          "disasterType": "Earthquake",
+          "country": "Mexico",
+          "year": 2014,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2020-0007-PRI",
+          "disasterType": "Earthquake",
+          "country": "Puerto Rico",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "earthquake",
+          "relation": "causes",
+          "target": "injuries",
+          "eventId": "2022-0808-USA",
+          "disasterType": "Earthquake",
+          "country": "United States",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "seismic activity",
+          "relation": "causes",
+          "target": "earthquakes",
+          "eventId": "2023-0749-ISL",
+          "disasterType": "Earthquake",
+          "country": "Iceland",
+          "year": 2023,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.628,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 10,
+      "relatedDisasterTypes": [
+        "Earthquake"
+      ],
+      "relatedRegions": [
+        "Other",
+        "North America",
+        "Latin America & Caribbean",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_06",
+      "question": "What are the primary causal chains in wildfire events, and how do climate and human factors interact?",
+      "narrative": "Based on the retrieved triplets from the crisesStorylinesRAG dataset (2014–2024), wildfire events are primarily attributed to both",
+      "evidenceTriplets": [
+        {
+          "source": "human action",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2021-0357-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "human factors",
+          "relation": "causes",
+          "target": "wildfires",
+          "eventId": "2021-0506-MKD",
+          "disasterType": "Wildfire",
+          "country": "North Macedonia",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "human activity",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2024-0288-CAN",
+          "disasterType": "Wildfire",
+          "country": "Canada",
+          "year": 2024,
+          "expertVerified": true
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2023-0534-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2023,
+          "expertVerified": true
+        },
+        {
+          "source": "human activities",
+          "relation": "causes",
+          "target": "wildfires",
+          "eventId": "2018-0299-CAN",
+          "disasterType": "Wildfire",
+          "country": "Canada",
+          "year": 2018,
+          "expertVerified": true
+        },
+        {
+          "source": "human-caused fires",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2024-0403-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2024,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfire",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2015-0421-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2015,
+          "expertVerified": true
+        },
+        {
+          "source": "human-caused fires",
+          "relation": "causes",
+          "target": "wildfires",
+          "eventId": "2023-0280-CAN",
+          "disasterType": "Wildfire",
+          "country": "Canada",
+          "year": 2023,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfire",
+          "relation": "causes",
+          "target": "deaths",
+          "eventId": "2016-0206-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfire",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2024-0126-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2024,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfire",
+          "relation": "causes",
+          "target": "health risks",
+          "eventId": "2021-0526-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfire",
+          "relation": "causes",
+          "target": "disruption of life",
+          "eventId": "2023-0289-RUS",
+          "disasterType": "Wildfire",
+          "country": "Russian Federation",
+          "year": 2023,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfires",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2020-0441-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2020,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfire",
+          "relation": "causes",
+          "target": "ecological risk",
+          "eventId": "2019-0134-CHN",
+          "disasterType": "Wildfire",
+          "country": "China",
+          "year": 2019,
+          "expertVerified": true
+        },
+        {
+          "source": "warm conditions",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2024-0288-CAN",
+          "disasterType": "Wildfire",
+          "country": "Canada",
+          "year": 2024,
+          "expertVerified": true
+        },
+        {
+          "source": "wildfires",
+          "relation": "causes",
+          "target": "fatalities",
+          "eventId": "2015-0275-CAN",
+          "disasterType": "Wildfire",
+          "country": "Canada",
+          "year": 2015,
+          "expertVerified": true
+        },
+        {
+          "source": "prescribed fire",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2022-0246-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2022,
+          "expertVerified": true
+        },
+        {
+          "source": "dry conditions",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2023-0524-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2023,
+          "expertVerified": true
+        },
+        {
+          "source": "heat",
+          "relation": "causes",
+          "target": "wildfires",
+          "eventId": "2015-0401-USA",
+          "disasterType": "Wildfire",
+          "country": "United States",
+          "year": 2015,
+          "expertVerified": true
+        },
+        {
+          "source": "human activities",
+          "relation": "causes",
+          "target": "wildfire",
+          "eventId": "2022-0100-KOR",
+          "disasterType": "Wildfire",
+          "country": "Korea, Republic of",
+          "year": 2022,
+          "expertVerified": true
+        }
+      ],
+      "confidenceScore": 0.703,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Wildfire"
+      ],
+      "relatedRegions": [
+        "Europe",
+        "North America",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_07",
+      "question": "What factors most commonly drive population displacement and forced migration in disaster events?",
+      "narrative": "Based on the provided causal triplets, the most commonly identified direct drivers of population displacement and forced migration are **floods** and related hydrological events.",
+      "evidenceTriplets": [
+        {
+          "source": "population displacement",
+          "relation": "causes",
+          "target": "disease transmission",
+          "eventId": "2016-0101-ETH",
+          "disasterType": "Flood",
+          "country": "Ethiopia",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "rescue efforts",
+          "relation": "prevents",
+          "target": "population displacement",
+          "eventId": "2018-0113-RUS",
+          "disasterType": "Flood",
+          "country": "Russian Federation",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "flood",
+          "relation": "causes",
+          "target": "population displacement",
+          "eventId": "2018-0113-RUS",
+          "disasterType": "Flood",
+          "country": "Russian Federation",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "displacement",
+          "eventId": "2016-0162-CHN",
+          "disasterType": "Mass movement (wet)",
+          "country": "China",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "disaster risk reduction",
+          "relation": "prevents",
+          "target": "displacement",
+          "eventId": "2021-0788-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "floods",
+          "relation": "causes",
+          "target": "relocation",
+          "eventId": "2015-0533-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "displacement",
+          "relation": "causes",
+          "target": "overcrowding",
+          "eventId": "2021-0615-LSO",
+          "disasterType": "Storm",
+          "country": "Lesotho",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "displacement",
+          "eventId": "2020-0095-PAK",
+          "disasterType": "Flood",
+          "country": "Pakistan",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "vulnerability",
+          "relation": "causes",
+          "target": "displacement",
+          "eventId": "2024-0002-MDG",
+          "disasterType": "Storm",
+          "country": "Madagascar",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "more damage",
+          "eventId": "2022-0674-NGA",
+          "disasterType": "Flood",
+          "country": "Nigeria",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "community effects",
+          "eventId": "2017-0381-DOM",
+          "disasterType": "Storm",
+          "country": "Dominican Republic",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "population affected",
+          "eventId": "2018-0244-GEO",
+          "disasterType": "Flood",
+          "country": "Georgia",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2016-0233-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster relief",
+          "relation": "prevents",
+          "target": "displacement",
+          "eventId": "2020-0322-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "secondary disaster",
+          "relation": "causes",
+          "target": "suspension of rescue",
+          "eventId": "2017-0044-CHN",
+          "disasterType": "Mass movement (wet)",
+          "country": "China",
+          "year": 2017,
+          "expertVerified": true
+        },
+        {
+          "source": "infrastructure damage",
+          "relation": "causes",
+          "target": "displacement",
+          "eventId": "2016-0292-USA",
+          "disasterType": "Flood",
+          "country": "United States",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "vulnerability",
+          "eventId": "2022-0788-ZAF",
+          "disasterType": "Flood",
+          "country": "South Africa",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "casualties",
+          "eventId": "2022-0694-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "relocation",
+          "relation": "prevents",
+          "target": "devastation",
+          "eventId": "2019-0389-SLE",
+          "disasterType": "Flood",
+          "country": "Sierra Leone",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "displacement",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2015-0371-PHL",
+          "disasterType": "Storm",
+          "country": "Philippines",
+          "year": 2015,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.674,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Storm",
+        "Flood",
+        "Mass movement (wet)"
+      ],
+      "relatedRegions": [
+        "Central Asia",
+        "Latin America & Caribbean",
+        "North America",
+        "Southeast Asia",
+        "Sub-Saharan Africa",
+        "South Asia",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_08",
+      "question": "What are the most common drivers of high economic losses in disaster events?",
+      "narrative": "Based on the provided causal triplets, the dataset offers limited direct evidence regarding the specific drivers of economic losses. Only two triplets explicitly identify a cause for economic damage:",
+      "evidenceTriplets": [
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "economic damage",
+          "eventId": "2015-0193-NGA",
+          "disasterType": "Road",
+          "country": "Nigeria",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster preparation",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2023-0300-PHL",
+          "disasterType": "Storm",
+          "country": "Philippines",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster teams",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2015-0105-PHL",
+          "disasterType": "Storm",
+          "country": "Philippines",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster relief",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2016-0342-CHN",
+          "disasterType": "Storm",
+          "country": "China",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster preparedness",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2022-0819-JPN",
+          "disasterType": "Storm",
+          "country": "Japan",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster forecasting",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2016-0268-VNM",
+          "disasterType": "Storm",
+          "country": "Viet Nam",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster relief",
+          "relation": "prevents",
+          "target": "losses",
+          "eventId": "2016-0095-CHN",
+          "disasterType": "Flood",
+          "country": "China",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster management",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2017-0462-ZAF",
+          "disasterType": "Storm",
+          "country": "South Africa",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster relief",
+          "relation": "prevents",
+          "target": "further economic damage",
+          "eventId": "2015-0078-CHN",
+          "disasterType": "Earthquake",
+          "country": "China",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster risk reduction",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2019-0356-PHL",
+          "disasterType": "Earthquake",
+          "country": "Philippines",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster mitigation",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2022-0042-IDN",
+          "disasterType": "Earthquake",
+          "country": "Indonesia",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "state of natural disaster",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2023-0724-FRA",
+          "disasterType": "Storm",
+          "country": "France",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster assistance",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2023-0239-USA",
+          "disasterType": "Storm",
+          "country": "United States",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "economic damage",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2018-0279-USA",
+          "disasterType": "Storm",
+          "country": "United States",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster planning",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2019-0164-IND",
+          "disasterType": "Storm",
+          "country": "India",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster declaration",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2022-0157-USA",
+          "disasterType": "Storm",
+          "country": "United States",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "destruction",
+          "relation": "causes",
+          "target": "economic damage",
+          "eventId": "2016-0209-CHN",
+          "disasterType": "Storm",
+          "country": "China",
+          "year": 2016,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster risk management",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2022-0099-MOZ",
+          "disasterType": "Storm",
+          "country": "Mozambique",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2015-0193-NGA",
+          "disasterType": "Road",
+          "country": "Nigeria",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster funding",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2023-0138-AUS",
+          "disasterType": "Flood",
+          "country": "Australia",
+          "year": 2023,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.653,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Road",
+        "Flood",
+        "Earthquake",
+        "Storm"
+      ],
+      "relatedRegions": [
+        "North America",
+        "Oceania",
+        "Southeast Asia",
+        "Sub-Saharan Africa",
+        "South Asia",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_09",
+      "question": "How effective are early warning systems in preventing casualties, according to the causal triplet data?",
+      "narrative": "Based on the provided causal triplet data from the crisesStorylinesRAG dataset, early warning systems are consistently shown to be effective in preventing casualties and fatalities across the documented events.\n\nSpecifically, the data indicates that \"early warning\" prevented \"casualties\" during a storm in Germany in 2021 and \"fatalities\" during a storm in France in 2023. Similarly, an \"early warning system\" was found to prevent \"fatalities\" during a flood in Israel in 2018.\n\nFurther supporting this trend, \"timely warning\" is documented as preventing \"casualties\" during a flood in New Zealand in 2023. These instances collectively suggest a direct and beneficial impact of early or timely warnings on reducing human loss of life in both storm and flood events across these specific geographic locations and time periods.",
+      "evidenceTriplets": [
+        {
+          "source": "early warning",
+          "relation": "prevents",
+          "target": "casualties",
+          "eventId": "2021-0363-DEU",
+          "disasterType": "Storm",
+          "country": "Germany",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "early warning",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2023-0725-FRA",
+          "disasterType": "Storm",
+          "country": "France",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "early warning system",
+          "relation": "prevents",
+          "target": "fatalities",
+          "eventId": "2018-0128-ISR",
+          "disasterType": "Flood",
+          "country": "Israel",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "timely warning",
+          "relation": "prevents",
+          "target": "casualties",
+          "eventId": "2023-0046-NZL",
+          "disasterType": "Flood",
+          "country": "New Zealand",
+          "year": 2023,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.662,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 4,
+      "relatedDisasterTypes": [
+        "Storm",
+        "Flood"
+      ],
+      "relatedRegions": [
+        "North Africa & Middle East",
+        "Europe",
+        "Oceania"
+      ]
+    },
+    {
+      "id": "insight_10",
+      "question": "What patterns emerge in drought and food insecurity causal chains across Sub-Saharan Africa?",
+      "narrative": "The retrieved data highlights consistent patterns of drought directly leading to various forms of food insecurity across multiple Sub-Saharan African countries between 2014 and",
+      "evidenceTriplets": [
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "food insecurity",
+          "eventId": "2017-9211-ZAF",
+          "disasterType": "Drought",
+          "country": "South Africa",
+          "year": 2017,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "hunger",
+          "eventId": "2022-9436-UGA",
+          "disasterType": "Drought",
+          "country": "Uganda",
+          "year": 2022,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "exploitation",
+          "eventId": "2016-9291-SWZ",
+          "disasterType": "Drought",
+          "country": "Eswatini",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "food loss",
+          "eventId": "2017-9207-AGO",
+          "disasterType": "Drought",
+          "country": "Angola",
+          "year": 2017,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "economic damage",
+          "eventId": "2015-9500-ZAF",
+          "disasterType": "Drought",
+          "country": "South Africa",
+          "year": 2015,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "violence",
+          "eventId": "2016-9291-SWZ",
+          "disasterType": "Drought",
+          "country": "Eswatini",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "economic distress",
+          "eventId": "2015-9575-GMB",
+          "disasterType": "Drought",
+          "country": "Gambia",
+          "year": 2015,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "abuse",
+          "eventId": "2016-9291-SWZ",
+          "disasterType": "Drought",
+          "country": "Eswatini",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "crop devastation",
+          "eventId": "2015-9500-ZAF",
+          "disasterType": "Drought",
+          "country": "South Africa",
+          "year": 2015,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "poor conditions",
+          "eventId": "2014-9231-SOM",
+          "disasterType": "Drought",
+          "country": "Somalia",
+          "year": 2014,
+          "expertVerified": true
+        },
+        {
+          "source": "covid-",
+          "relation": "causes",
+          "target": "food insecurity",
+          "eventId": "2021-9359-MOZ",
+          "disasterType": "Drought",
+          "country": "Mozambique",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "neglect",
+          "eventId": "2016-9291-SWZ",
+          "disasterType": "Drought",
+          "country": "Eswatini",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "displacement",
+          "eventId": "2021-9359-MOZ",
+          "disasterType": "Drought",
+          "country": "Mozambique",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "crop failures",
+          "relation": "causes",
+          "target": "hunger",
+          "eventId": "2020-9609-SOM",
+          "disasterType": "Drought",
+          "country": "Somalia",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "crop failures",
+          "eventId": "2020-9609-SOM",
+          "disasterType": "Drought",
+          "country": "Somalia",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "drought",
+          "relation": "causes",
+          "target": "infrastructure damage",
+          "eventId": "2024-9338-NAM",
+          "disasterType": "Drought",
+          "country": "Namibia",
+          "year": 2024,
+          "expertVerified": true
+        },
+        {
+          "source": "water shortages",
+          "relation": "causes",
+          "target": "hunger",
+          "eventId": "2020-9609-SOM",
+          "disasterType": "Drought",
+          "country": "Somalia",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "social protection",
+          "relation": "prevents",
+          "target": "exploitation",
+          "eventId": "2016-9291-SWZ",
+          "disasterType": "Drought",
+          "country": "Eswatini",
+          "year": 2016,
+          "expertVerified": true
+        },
+        {
+          "source": "humanitarian assistance",
+          "relation": "prevents",
+          "target": "food insecurity",
+          "eventId": "2021-9359-MOZ",
+          "disasterType": "Drought",
+          "country": "Mozambique",
+          "year": 2021,
+          "expertVerified": true
+        },
+        {
+          "source": "poor rainy season",
+          "relation": "causes",
+          "target": "drought",
+          "eventId": "2014-9231-SOM",
+          "disasterType": "Drought",
+          "country": "Somalia",
+          "year": 2014,
+          "expertVerified": true
+        }
+      ],
+      "confidenceScore": 0.714,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Drought"
+      ],
+      "relatedRegions": [
+        "Sub-Saharan Africa"
+      ]
+    },
+    {
+      "id": "insight_11",
+      "question": "What structural and governance factors most commonly appear as root causes across all disaster types?",
+      "narrative": "Based on the retrieved triplets, the most commonly appearing structural and governance factors related to disaster outcomes are those focused on preparedness, risk reduction, and mitigation. \"Dis",
+      "evidenceTriplets": [
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "affected municipalities",
+          "eventId": "2019-0424-JPN",
+          "disasterType": "Storm",
+          "country": "Japan",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "community effects",
+          "eventId": "2017-0381-DOM",
+          "disasterType": "Storm",
+          "country": "Dominican Republic",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster preparedness",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2021-0200-IDN",
+          "disasterType": "Earthquake",
+          "country": "Indonesia",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "economic damage",
+          "eventId": "2015-0193-NGA",
+          "disasterType": "Road",
+          "country": "Nigeria",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster teams",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2020-0370-PHL",
+          "disasterType": "Earthquake",
+          "country": "Philippines",
+          "year": 2020,
+          "expertVerified": false
+        },
+        {
+          "source": "vulnerability",
+          "relation": "causes",
+          "target": "infrastructure damage",
+          "eventId": "2021-0758-PER",
+          "disasterType": "Earthquake",
+          "country": "Peru",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster risk reduction",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2015-0462-PHL",
+          "disasterType": "Storm",
+          "country": "Philippines",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "property destruction",
+          "eventId": "2015-0193-NGA",
+          "disasterType": "Road",
+          "country": "Nigeria",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "fear",
+          "eventId": "2015-0047-ITA",
+          "disasterType": "Water",
+          "country": "Italy",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster mitigation",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2022-0042-IDN",
+          "disasterType": "Earthquake",
+          "country": "Indonesia",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "infrastructure damage",
+          "eventId": "2018-0391-IND",
+          "disasterType": "Rail",
+          "country": "India",
+          "year": 2018,
+          "expertVerified": false
+        },
+        {
+          "source": "state of natural disaster",
+          "relation": "causes",
+          "target": "emergency funds",
+          "eventId": "2015-0451-FRA",
+          "disasterType": "Flood",
+          "country": "France",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2019-0424-JPN",
+          "disasterType": "Storm",
+          "country": "Japan",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster risk reduction",
+          "relation": "prevents",
+          "target": "injuries",
+          "eventId": "2019-0356-PHL",
+          "disasterType": "Earthquake",
+          "country": "Philippines",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster management",
+          "relation": "prevents",
+          "target": "infrastructure damage",
+          "eventId": "2017-0178-ZAF",
+          "disasterType": "Storm",
+          "country": "South Africa",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "casualties",
+          "eventId": "2015-0193-NGA",
+          "disasterType": "Road",
+          "country": "Nigeria",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "state of natural disaster",
+          "relation": "prevents",
+          "target": "excess damage",
+          "eventId": "2019-0558-FRA",
+          "disasterType": "Storm",
+          "country": "France",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster relief",
+          "relation": "prevents",
+          "target": "further economic damage",
+          "eventId": "2015-0078-CHN",
+          "disasterType": "Earthquake",
+          "country": "China",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster preparedness",
+          "relation": "prevents",
+          "target": "economic damage",
+          "eventId": "2014-0343-IND",
+          "disasterType": "Flood",
+          "country": "India",
+          "year": 2014,
+          "expertVerified": false
+        },
+        {
+          "source": "tsunami",
+          "relation": "causes",
+          "target": "infrastructure damage",
+          "eventId": "2015-0435-CHL",
+          "disasterType": "Earthquake",
+          "country": "Chile",
+          "year": 2015,
+          "expertVerified": false
+        }
+      ],
+      "confidenceScore": 0.647,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Storm",
+        "Road",
+        "Flood",
+        "Earthquake",
+        "Water",
+        "Rail"
+      ],
+      "relatedRegions": [
+        "Latin America & Caribbean",
+        "Southeast Asia",
+        "Sub-Saharan Africa",
+        "South Asia",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    },
+    {
+      "id": "insight_12",
+      "question": "What does the data reveal about climate change as a driver across different disaster types and regions?",
+      "narrative": "The provided data from the crisesStorylinesRAG dataset reveals that climate change, global warming, changing climate, and climate factors are identified as significant drivers across",
+      "evidenceTriplets": [
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "intensity increase",
+          "eventId": "2023-0774-MEX",
+          "disasterType": "Road",
+          "country": "Mexico",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "storm severity",
+          "eventId": "2024-0062-USA",
+          "disasterType": "Storm",
+          "country": "United States",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "flooding",
+          "eventId": "2019-0171-CAN",
+          "disasterType": "Flood",
+          "country": "Canada",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "record rainfall",
+          "eventId": "2022-0699-COL",
+          "disasterType": "Flood",
+          "country": "Colombia",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "global warming",
+          "relation": "causes",
+          "target": "storms",
+          "eventId": "2023-0581-ESP",
+          "disasterType": "Flood",
+          "country": "Spain",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "erratic weather",
+          "eventId": "2023-0518-VNM",
+          "disasterType": "Flood",
+          "country": "Viet Nam",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "global warming",
+          "relation": "causes",
+          "target": "heavy rains",
+          "eventId": "2023-0581-ESP",
+          "disasterType": "Flood",
+          "country": "Spain",
+          "year": 2023,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "extreme rainfall",
+          "eventId": "2022-0480-USA",
+          "disasterType": "Flood",
+          "country": "United States",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "people affected",
+          "eventId": "2019-0424-JPN",
+          "disasterType": "Storm",
+          "country": "Japan",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "floods",
+          "eventId": "2023-0797-TZA",
+          "disasterType": "Mass movement (wet)",
+          "country": "Tanzania, United Republic of",
+          "year": 2023,
+          "expertVerified": true
+        },
+        {
+          "source": "climate factors",
+          "relation": "causes",
+          "target": "vulnerability",
+          "eventId": "2024-0002-MDG",
+          "disasterType": "Storm",
+          "country": "Madagascar",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "flood",
+          "eventId": "2015-0313-GUY",
+          "disasterType": "Flood",
+          "country": "Guyana",
+          "year": 2015,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "heavy rainfall",
+          "eventId": "2024-0199-AUS",
+          "disasterType": "Flood",
+          "country": "Australia",
+          "year": 2024,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "extreme weather",
+          "eventId": "2022-0609-ITA",
+          "disasterType": "Flood",
+          "country": "Italy",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "hurricane",
+          "eventId": "2019-0412-USA",
+          "disasterType": "Storm",
+          "country": "United States",
+          "year": 2019,
+          "expertVerified": false
+        },
+        {
+          "source": "changing climate",
+          "relation": "causes",
+          "target": "flooding",
+          "eventId": "2021-0695-IDN",
+          "disasterType": "Flood",
+          "country": "Indonesia",
+          "year": 2021,
+          "expertVerified": false
+        },
+        {
+          "source": "disaster",
+          "relation": "causes",
+          "target": "community effects",
+          "eventId": "2017-0381-DOM",
+          "disasterType": "Storm",
+          "country": "Dominican Republic",
+          "year": 2017,
+          "expertVerified": false
+        },
+        {
+          "source": "climate change",
+          "relation": "causes",
+          "target": "extreme heat",
+          "eventId": "2023-0364-USA",
+          "disasterType": "Extreme temperature",
+          "country": "United States",
+          "year": 2023,
+          "expertVerified": true
+        },
+        {
+          "source": "climate change adaptation",
+          "relation": "prevents",
+          "target": "extreme weather",
+          "eventId": "2022-0609-ITA",
+          "disasterType": "Flood",
+          "country": "Italy",
+          "year": 2022,
+          "expertVerified": false
+        },
+        {
+          "source": "global warming",
+          "relation": "causes",
+          "target": "ecological changes",
+          "eventId": "2017-0046-IND",
+          "disasterType": "Mass movement (wet)",
+          "country": "India",
+          "year": 2017,
+          "expertVerified": true
+        }
+      ],
+      "confidenceScore": 0.676,
+      "confidenceLabel": "Mixed",
+      "model": "gemini-2.5-flash",
+      "modelVersion": "gemini-2.5-flash",
+      "runTimestamp": "2026-04-22T01:35:10.252351+00:00",
+      "tripletsRetrievedCount": 20,
+      "relatedDisasterTypes": [
+        "Storm",
+        "Mass movement (wet)",
+        "Road",
+        "Extreme temperature",
+        "Flood"
+      ],
+      "relatedRegions": [
+        "Latin America & Caribbean",
+        "North America",
+        "Oceania",
+        "Southeast Asia",
+        "Sub-Saharan Africa",
+        "South Asia",
+        "Europe",
+        "East Asia & Pacific"
+      ]
+    }
+  ]
+}
