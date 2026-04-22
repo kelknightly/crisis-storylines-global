@@ -98,7 +98,7 @@ export default function HomePage() {
                   10.5281/zenodo.18598183
                   <ExternalLink className="w-3 h-3" />
                 </a>
-                {" · "}
+                <br /><br />
                 <Link href="/about" className="text-primary hover:underline">
                   About this visualization →
                 </Link>

@@ -4,13 +4,13 @@ import Link from "next/link";
 
 const AUTHORS = [
   { name: "Michele Ronco", affiliation: "European Commission JRC", email: "michele.ronco@ec.europa.eu" },
-  { name: "L. Bandelli", affiliation: "Engineering Ingegneria Informatica, Roma" },
-  { name: "L. Bertolini", affiliation: "European Commission JRC" },
-  { name: "S. Consoli", affiliation: "European Commission JRC" },
-  { name: "D. Delforge", affiliation: "UCLouvain, Belgium" },
-  { name: "A. Spadaro", affiliation: "Engineering Ingegneria Informatica, Roma" },
-  { name: "M. Verile", affiliation: "Engineering Ingegneria Informatica, Roma" },
-  { name: "C. Corbane", affiliation: "European Commission JRC" },
+  { name: "Luca Bandelli", affiliation: "Engineering Ingegneria Informatica, Roma" },
+  { name: "Lorenzo Bertolini", affiliation: "European Commission JRC" },
+  { name: "Sergio Consoli", affiliation: "European Commission JRC" },
+  { name: "Damien Delforge", affiliation: "UCLouvain, Belgium" },
+  { name: "Alessio Spadaro", affiliation: "Engineering Ingegneria Informatica, Roma" },
+  { name: "Marco Verile", affiliation: "Engineering Ingegneria Informatica, Roma" },
+  { name: "Christina Corbane", affiliation: "European Commission JRC" },
 ];
 
 export default function AboutPage() {
@@ -53,6 +53,7 @@ export default function AboutPage() {
             <p>
               Ronco, M., Bandelli, L., Bertolini, L., Consoli, S., Delforge, D.,
               Spadaro, A., Verile, M., &amp; Corbane, C. (2026).{" "}
+              {/* Full names: Michele Ronco, Luca Bandelli, Lorenzo Bertolini, Sergio Consoli, Damien Delforge, Alessio Spadaro, Marco Verile, Christina Corbane */}
               <em className="font-serif not-italic">
                 Disaster storylines and knowledge graphs from global news with large
                 language models and retrieval-augmented generation.
@@ -104,25 +105,42 @@ export default function AboutPage() {
                 file: "DisasterStory.csv",
                 desc: "1,424 disaster events (2014–2024) with AI-generated narrative storylines and causal knowledge graph triplets.",
                 size: "5.2 MB",
+                href: "https://zenodo.org/records/18598183/files/DisasterStory.csv?download=1",
               },
               {
                 file: "triplet_expert_val.xlsx",
                 desc: "1,000 randomly sampled triplets annotated by 6 independent disaster-management experts. Used for validation and confidence scoring.",
                 size: "431 kB",
+                href: "https://zenodo.org/records/18598183/files/triplet_expert_val.xlsx?download=1",
               },
               {
                 file: "input_emdat_1424.xlsx",
                 desc: "EM-DAT disaster registry seed data: disaster type, country, ISO codes, and dates used to guide news retrieval.",
                 size: "2.3 MB",
+                href: "https://zenodo.org/records/18598183/files/input_emdat_1424.xlsx?download=1",
               },
-            ].map(({ file, desc, size }) => (
+            ].map(({ file, desc, size, href }) => (
               <div key={file} className="bg-card border border-border rounded-lg px-4 py-3 flex gap-3">
-                <code className="text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded self-start mt-0.5 shrink-0">
+                <a
+                  href={href}
+                  download
+                  className="text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded self-start mt-0.5 shrink-0 hover:bg-primary/20 transition-colors"
+                >
                   {file}
-                </code>
-                <div>
+                </a>
+                <div className="flex-1">
                   <p className="text-sm text-foreground">{desc}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{size}</p>
+                  <div className="flex items-center gap-3 mt-1">
+                    <p className="text-xs text-muted-foreground">{size}</p>
+                    <a
+                      href={href}
+                      download
+                      className="text-xs text-primary hover:underline inline-flex items-center gap-1"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      Download
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}

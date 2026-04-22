@@ -24,7 +24,7 @@ interface Props {
 // Semantic edge colours — strong red for causes, strong green for prevents
 const CAUSES_COLOR = "rgba(220, 38, 38, 0.85)";
 const PREVENTS_COLOR = "rgba(22, 163, 74, 0.85)";
-const NODE_COLOR = "oklch(0.52 0.1 258)";
+const NODE_COLOR = "#64748b"; // slate-500 — neutral, doesn't compete with edge colours
 const NODE_HIGHLIGHT = "oklch(0.78 0.12 70)";
 
 export default function ForceGraphViz({
@@ -32,16 +32,17 @@ export default function ForceGraphViz({
   width = 900,
   height = 560,
   highlightNodes,
-}: Props) {
+  alwaysShowLabels = false,
+}: Props & { alwaysShowLabels?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fgRef = useRef<any>(null);
 
-  // Increase charge repulsion so nodes spread out
+  // Spread nodes out; event-level graphs (fewer nodes) benefit from stronger repulsion
   useEffect(() => {
     const fg = fgRef.current;
     if (!fg) return;
-    fg.d3Force("charge")?.strength(-280);
-    fg.d3Force("link")?.distance(60);
+    fg.d3Force("charge")?.strength(-500);
+    fg.d3Force("link")?.distance(110);
     fg.d3ReheatSimulation();
   }, [data]);
   // Transform our schema → react-force-graph-2d schema (uses `links`)
@@ -78,18 +79,18 @@ export default function ForceGraphViz({
       ctx.fill();
       ctx.globalAlpha = 1;
 
-      // Label (only if zoomed in enough or node is large)
-      if (globalScale >= 1.5 || val > 6) {
-        const fontSize = Math.max(8, 10 / globalScale);
+      // Always show labels on event-level graphs; on global graph only when zoomed or prominent
+      if (alwaysShowLabels || globalScale >= 1.2 || val > 6) {
+        const fontSize = Math.max(9, 11 / Math.max(globalScale, 0.8));
         ctx.font = `${fontSize}px Inter, sans-serif`;
         ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "oklch(0.2 0.015 250)";
-        const shortLabel = label.length > 24 ? label.slice(0, 24) + "…" : label;
-        ctx.fillText(shortLabel, x, y + radius + fontSize);
+        ctx.textBaseline = "top";
+        ctx.fillStyle = "#1e293b"; // slate-900
+        const shortLabel = label.length > 28 ? label.slice(0, 28) + "…" : label;
+        ctx.fillText(shortLabel, x, y + radius + 3);
       }
     },
-    [highlightNodes]
+    [highlightNodes, alwaysShowLabels]
   );
 
   if (data.nodes.length === 0) {

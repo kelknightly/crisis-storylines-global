@@ -8,6 +8,7 @@ import type { DisasterEvent } from "@/types";
 import PageHeader from "@/components/layout/PageHeader";
 import { REGIONS } from "@/lib/regions";
 import { ArrowUpDown, ArrowUp, ArrowDown, ExternalLink } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 const SEVERITIES = ["", "Low", "Medium", "High"];
 
@@ -22,6 +23,18 @@ function SortIcon({ col, active, dir }: { col: string; active: boolean; dir: Sor
 }
 
 const SEVERITY_ORDER: Record<string, number> = { Low: 0, Medium: 1, High: 2 };
+
+function parseSeverity(s: string): { label: string; detail: string | null } {
+  const m = s.match(/^(High|Medium|Low)(.*)?$/i);
+  if (m) {
+    const raw = m[2]?.trim() ?? "";
+    const detail = raw.startsWith("(") && raw.endsWith(")")
+      ? raw.slice(1, -1).trim()
+      : raw || null;
+    return { label: m[1], detail };
+  }
+  return { label: s, detail: null };
+}
 
 export default function EventsPage() {
   return (
@@ -309,16 +322,27 @@ function EventsContent() {
                           {event.region}
                         </td>
                         <td className="px-4 py-3">
-                          {event.severity && event.severity !== "nan" ? (
-                            <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${
-                                severityColor[event.severity] ??
-                                "bg-muted text-muted-foreground border-border"
-                              }`}
-                            >
-                              {event.severity}
-                            </span>
-                          ) : (
+                          {event.severity && event.severity !== "nan" ? (() => {
+                            const { label, detail } = parseSeverity(event.severity);
+                            const badge = (
+                              <span
+                                className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${
+                                  severityColor[label] ??
+                                  "bg-muted text-muted-foreground border-border"
+                                }`}
+                              >
+                                {label}
+                              </span>
+                            );
+                            return detail ? (
+                              <Tooltip>
+                                <TooltipTrigger className="cursor-default focus:outline-none">
+                                  {badge}
+                                </TooltipTrigger>
+                                <TooltipContent side="top">{detail}</TooltipContent>
+                              </Tooltip>
+                            ) : badge;
+                          })() : (
                             <span className="text-xs text-muted-foreground/50">—</span>
                           )}
                         </td>

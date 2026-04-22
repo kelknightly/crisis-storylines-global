@@ -6,7 +6,7 @@ import Link from "next/link";
 import { fetchEvent } from "@/lib/data";
 import type { DisasterEvent } from "@/types";
 import dynamic from "next/dynamic";
-import { ArrowLeft, MapPin, Users, Skull, DollarSign, Newspaper } from "lucide-react";
+import { ArrowLeft, MapPin, Users, HeartCrack, DollarSign, Newspaper } from "lucide-react";
 
 const ForceGraphViz = dynamic(
   () => import("@/components/charts/ForceGraphViz"),
@@ -153,7 +153,7 @@ export default function EventPage() {
         </p>
         <div className="flex flex-wrap gap-4">
           {event.fatalities != null && (
-            <MetaChip icon={Skull} label="Fatalities" value={event.fatalities.toLocaleString()} />
+            <MetaChip icon={HeartCrack} label="Fatalities" value={event.fatalities.toLocaleString()} />
           )}
           {event.peopleAffected != null && (
             <MetaChip icon={Users} label="Affected" value={event.peopleAffected.toLocaleString()} />
@@ -184,7 +184,7 @@ export default function EventPage() {
               ({event.triplets.length} triplets)
             </span>
           </h2>
-          <ForceGraphViz data={localGraphData} width={700} height={400} />
+          <ForceGraphViz data={localGraphData} width={700} height={420} alwaysShowLabels />
         </div>
       )}
 
@@ -199,7 +199,15 @@ export default function EventPage() {
       {/* Raw triplets */}
       {event.triplets.length > 0 && (
         <div className="bg-card border border-border rounded-xl p-5">
-          <h2 className="font-semibold text-foreground mb-4">Raw causal triplets</h2>
+          <h2 className="font-semibold text-foreground mb-1">Raw causal triplets</h2>
+          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+            These structured <span className="font-medium text-foreground">subject → relation → object</span> statements
+            were extracted from news reports about this event using an AI language model. Each triplet
+            captures a single causal or preventive relationship — for example,{" "}
+            <span className="font-mono text-xs bg-muted px-1 py-0.5 rounded">heavy rainfall → causes → flooding</span>.
+            The triplets feed the knowledge graph above and are also aggregated into the global causal network
+            across all events, powering the Trends and Insights pages.
+          </p>
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
@@ -214,7 +222,7 @@ export default function EventPage() {
                   <tr key={i} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                     <td className="py-1.5 pr-4 font-mono text-foreground/80">{t.source}</td>
                     <td className="py-1.5 pr-4">
-                      <span className={t.relation === "causes" ? "text-[oklch(0.52_0.1_258)]" : "text-[oklch(0.55_0.1_152)]"}>
+                      <span className={t.relation === "causes" ? "font-bold text-red-600" : "font-bold text-green-600"}>
                         {t.relation}
                       </span>
                     </td>
