@@ -8,13 +8,34 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Bold categorical palette — 25 distinct hues, high saturation
+// Tableau 20 — the industry-standard data journalism palette
 const BOLD_COLORS = [
-  "#2563eb", "#dc2626", "#16a34a", "#d97706", "#7c3aed",
-  "#0891b2", "#be185d", "#65a30d", "#ea580c", "#0284c7",
-  "#9333ea", "#059669", "#b45309", "#e11d48", "#0d9488",
-  "#4338ca", "#c2410c", "#047857", "#1d4ed8", "#92400e",
-  "#7e22ce", "#0f766e", "#b91c1c", "#15803d", "#6d28d9",
+  "#4e79a7", // steel blue
+  "#f28e2c", // orange
+  "#e15759", // red
+  "#76b7b2", // teal
+  "#59a14f", // green
+  "#edc949", // yellow
+  "#af7aa1", // mauve
+  "#ff9da7", // pink
+  "#9c755f", // brown
+  "#bab0ab", // warm grey
+  "#499894", // dark teal
+  "#86bcb6", // light teal
+  "#ffbe7d", // peach
+  "#8cd17d", // light green
+  "#b6992d", // gold
+  "#f1ce63", // pale yellow
+  "#d37295", // rose
+  "#fabfd2", // blush
+  "#b07aa1", // purple
+  "#79706e", // taupe
+  "#a0cbe8", // light blue
+  "#d7b5a6", // salmon
+  "#9d7660", // sienna
+  "#499894", // seafoam
+  "#e15759", // coral
+  "#4e79a7", // navy
 ];
 
 interface Props {

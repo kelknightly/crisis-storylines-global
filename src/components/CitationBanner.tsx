@@ -7,6 +7,7 @@ const CITATION =
 
 const DOI = "https://doi.org/10.5281/zenodo.18598183";
 const ORIGINAL_REPO = "https://github.com/jrcf7/crisesStorylinesRAG";
+const HF_SPACE = "https://huggingface.co/spaces/roncmic/crisesStorylinesRAG";
 const THIS_REPO = "https://github.com/kelknightly/crisis-storylines-global";
 
 export default function CitationBanner() {
@@ -58,6 +59,18 @@ export default function CitationBanner() {
                 className="text-primary hover:underline"
               >
                 jrcf7/crisesStorylinesRAG
+              </a>
+            </div>
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span className="font-medium">HuggingFace demo:</span>
+              <a
+                href={HF_SPACE}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                roncmic/crisesStorylinesRAG
               </a>
             </div>
             <div className="flex items-center gap-1.5 text-muted-foreground">

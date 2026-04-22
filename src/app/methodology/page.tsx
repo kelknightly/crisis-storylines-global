@@ -506,6 +506,17 @@ export default function MethodologyPage() {
               github.com/jrcf7/crisesStorylinesRAG
             </a>
           </p>
+          <p>
+            Original authors&apos; HuggingFace demo:{" "}
+            <a
+              href="https://huggingface.co/spaces/roncmic/crisesStorylinesRAG"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              huggingface.co/spaces/roncmic/crisesStorylinesRAG
+            </a>
+          </p>
         </div>
 
       </div>

@@ -45,7 +45,7 @@ ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "public" / "data"
 MODEL_NAME = "gemini-2.5-flash"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-TOP_K = 20
+TOP_K = 100
 MAX_TOKENS = 8192
 
 SYSTEM_PROMPT = (
@@ -178,7 +178,9 @@ def retrieve_triplets(
 ) -> list[dict]:
     """Embed query, search LanceDB, return top-k matching triplets."""
     q_emb = embedder.encode([query])[0].tolist()
-    results = table.search(q_emb).limit(top_k * 3).to_list()
+    # Over-fetch generously: filtered queries need more candidates to find top_k matches
+    fetch_limit = top_k * 20 if filter_dict else top_k * 5
+    results = table.search(q_emb).limit(fetch_limit).to_list()
 
     retrieved = []
     seen = set()
