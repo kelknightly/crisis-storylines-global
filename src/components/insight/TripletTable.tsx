@@ -43,7 +43,7 @@ export default function TripletTable({ triplets, limit }: Props) {
                 <td className="py-1.5 pr-3">
                   <TooltipProvider>
                     <Tooltip>
-                      <TooltipTrigger asChild>
+                      <TooltipTrigger>
                         <span>
                           {t.highConfidence ? (
                             <CheckCircle2 className="w-3.5 h-3.5 text-[oklch(0.67_0.1_152)]" />
