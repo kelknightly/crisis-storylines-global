@@ -182,7 +182,7 @@ def parse_triplets(raw: object) -> list[list[str]]:
     try:
         parsed = ast.literal_eval(text)
         if isinstance(parsed, list):
-            return [t for t in parsed if isinstance(t, list) and len(t) == 3]
+            return [list(t) for t in parsed if isinstance(t, (list, tuple)) and len(t) == 3]
     except (ValueError, SyntaxError):
         pass
     # Fallback: regex extraction of quoted triplets
@@ -249,18 +249,26 @@ def main() -> None:
     print(f"  Loaded {len(val):,} expert validation rows")
 
     # -----------------------------------------------------------------------
-    # 2. Clean and enrich the main dataframe
+    # 2. Merge EM-DAT metadata into main dataframe on DisNo.
+    # -----------------------------------------------------------------------
+    # Normalise column names before merge
+    df.columns = df.columns.str.strip()
+    emdat.columns = emdat.columns.str.strip()
+
+    # Select the EM-DAT columns we need (avoid duplicating Disaster Type / Country)
+    emdat_cols = ["DisNo.", "ISO", "Start Year", "Start Month", "Start Day",
+                  "Latitude", "Longitude", "Total Deaths", "Total Affected",
+                  "Total Damage ('000 US$)", "Location"]
+    emdat_subset = emdat[[c for c in emdat_cols if c in emdat.columns]].copy()
+    emdat_subset = emdat_subset.drop_duplicates(subset=["DisNo."])
+
+    df = df.merge(emdat_subset, on="DisNo.", how="left")
+    print(f"  Merged EM-DAT metadata — {df['ISO'].notna().sum():,}/{len(df):,} events matched")
+
+    # -----------------------------------------------------------------------
+    # 3. Clean and enrich the main dataframe
     # -----------------------------------------------------------------------
     print("\n[4/6] Parsing causal triplets and building JSON …")
-
-    # Normalise column names
-    df.columns = df.columns.str.strip()
-
-    # Map ISO codes to regions and country names
-    iso_col = next((c for c in df.columns if c.upper() in ("ISO", "ISO3", "COUNTRY CODE")), None)
-    if iso_col is None:
-        # Try to detect from partial match
-        iso_col = next((c for c in df.columns if "iso" in c.lower()), "ISO")
 
     events: list[dict] = []
     all_triplets: list[dict] = []
@@ -272,18 +280,33 @@ def main() -> None:
 
     for _, row in tqdm(df.iterrows(), total=len(df), desc="  Events"):
         dis_no = str(row.get("DisNo.", "")).strip()
-        iso = str(row.get(iso_col, "")).strip().upper()[:3]
-        country_full = iso3_to_country(iso) if iso else str(row.get("Country", ""))
+        iso = str(row.get("ISO", "")).strip().upper()[:3]
+        country_full = iso3_to_country(iso) if iso and iso != "NAN" else str(row.get("Country", ""))
         region = REGION_MAP.get(iso, "Other")
-        lat, lng = COUNTRY_CENTROIDS.get(iso, (None, None))
+        # Prefer EM-DAT lat/lng; fall back to country centroid
+        lat_raw = row.get("Latitude")
+        lng_raw = row.get("Longitude")
+        if pd.notna(lat_raw) and pd.notna(lng_raw):
+            lat, lng = float(lat_raw), float(lng_raw)
+        else:
+            lat, lng = COUNTRY_CENTROIDS.get(iso, (None, None))
 
-        year = int(row["Start Year"]) if pd.notna(row.get("Start Year")) else 0
-        month = int(row["Start Month"]) if pd.notna(row.get("Start Month")) else 0
-        day = int(row["Start Day"]) if pd.notna(row.get("Start Day")) else 0
+        # Dates — prefer EM-DAT Start Year/Month/Day, fall back to start_dt
+        if pd.notna(row.get("Start Year")):
+            year = int(row["Start Year"])
+            month = int(row["Start Month"]) if pd.notna(row.get("Start Month")) else 0
+            day = int(row["Start Day"]) if pd.notna(row.get("Start Day")) else 0
+        else:
+            try:
+                from datetime import datetime
+                dt = datetime.strptime(str(row.get("start_dt", ""))[:10], "%Y-%m-%d")
+                year, month, day = dt.year, dt.month, dt.day
+            except Exception:
+                year, month, day = 0, 0, 0
         disaster_type = str(row.get("Disaster Type", "Unknown")).strip()
 
         # Parse triplets
-        raw_graph = row.get("causal graph", row.get("Causal graph", row.get("causal_graph", "")))
+        raw_graph = row.get("llama graph", row.get("causal graph", row.get("Causal graph", row.get("causal_graph", ""))))
         triplets_raw = parse_triplets(raw_graph)
 
         if not triplets_raw:
@@ -351,9 +374,9 @@ def main() -> None:
             "multiHazardRisk": str(row.get("likelihood of multi-hazard risks", "")).strip(),
             "bestPractices": str(row.get("best practices for managing this risk", "")).strip(),
             "recommendations": str(row.get("recommendations and supportive measures for recovery", "")).strip(),
-            "peopleAffected": safe_int(row.get("People affected")),
-            "fatalities": safe_int(row.get("Fatalities")),
-            "economicLosses": str(row.get("Economic losses", "")).strip(),
+            "peopleAffected": safe_int(row.get("Total Affected")),
+            "fatalities": safe_int(row.get("Total Deaths")),
+            "economicLosses": str(row.get("Total Damage ('000 US$)", "")).strip(),
             "locations": locations,
             "nNews": safe_int(row.get("nNews")) or 0,
             "triplets": event_triplets,
