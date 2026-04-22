@@ -213,15 +213,15 @@ export default function MethodologyPage() {
                   },
                   {
                     step: "2",
-                    title: "Retrieve the top-20 most relevant triplets",
+                    title: "Retrieve the top-100 most relevant triplets",
                     detail:
-                      "Each analytical question is embedded with the same model. A cosine-similarity search returns the 20 triplets whose meaning is closest to the question. Optional filters (e.g. disaster type = \"Flood\", relation = \"causes\") narrow retrieval further before fallback to the full corpus if fewer than 5 matches are found.",
+                      "Each analytical question is embedded with the same model. A cosine-similarity search returns the 100 triplets whose meaning is closest to the question. Optional filters (e.g. disaster type = \"Flood\", relation = \"causes\") narrow retrieval further before fallback to the full corpus if fewer than 5 matches are found.",
                   },
                   {
                     step: "3",
                     title: "Generate a narrative — from retrieved triplets only",
                     detail:
-                      "The 20 retrieved triplets are formatted as a numbered evidence list and passed to Gemini 2.5 Flash alongside a strict system prompt. The model is instructed to answer using ONLY those triplets, to reference specific causal relationships, to be precise about geography and time period, and to explicitly state when the evidence is insufficient for a strong conclusion.",
+                      "The 100 retrieved triplets are formatted as a numbered evidence list and passed to Gemini 2.5 Flash alongside a strict system prompt. The model is instructed to answer using ONLY those triplets, to reference specific causal relationships, to be precise about geography and time period, and to explicitly state when the evidence is insufficient for a strong conclusion.",
                   },
                 ].map(({ step, title, detail }) => (
                   <li key={step} className="flex gap-4 px-4 py-3.5">
@@ -282,7 +282,7 @@ export default function MethodologyPage() {
                 <span className="font-semibold text-muted-foreground">Vector store</span>
                 <span>LanceDB (in-memory, offline only — not deployed)</span>
                 <span className="font-semibold text-muted-foreground">Retrieval k</span>
-                <span>Top-20 semantically similar triplets per question</span>
+                <span>Top-100 semantically similar triplets per question</span>
                 <span className="font-semibold text-muted-foreground">Questions answered</span>
                 <span>12 pre-defined analytical questions (see Insights page)</span>
                 <span className="font-semibold text-muted-foreground">Run mode</span>

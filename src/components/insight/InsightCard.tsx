@@ -82,7 +82,7 @@ export default function InsightCard({ insight, index }: Props) {
 
           {open && (
             <div className="px-6 pb-5">
-              <TripletTable triplets={insight.evidenceTriplets} limit={8} />
+              <TripletTable triplets={insight.evidenceTriplets} />
             </div>
           )}
         </div>
