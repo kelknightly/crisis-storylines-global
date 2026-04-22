@@ -137,48 +137,126 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        {/* 3. This Visualization's LLM Usage */}
+        {/* 3. This Visualization's LLM Usage — RAG */}
         <section>
-          <SectionHeading num="3" title="This Visualization's LLM Usage" />
-          <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
+          <SectionHeading num="3" title="How the AI Insights Are Generated (RAG)" />
+          <div className="space-y-5 text-sm text-foreground/90 leading-relaxed">
+
+            {/* What RAG is */}
             <p>
-              This dashboard uses an LLM in a single, bounded way: to synthesise
-              pre-defined analytical questions against the existing triplet dataset.
-              The LLM does{" "}
-              <span className="font-semibold">not generate new knowledge</span> — it
-              summarises patterns already present in the retrieved triplets. All outputs
-              are generated offline once and stored as static JSON; no LLM calls occur
-              when users browse the site.
+              The Insights page uses{" "}
+              <span className="font-semibold">Retrieval-Augmented Generation (RAG)</span> — a
+              technique that constrains an LLM to reason only over a specific, curated body
+              of evidence rather than drawing on its general training knowledge. In this
+              implementation the body of evidence is exclusively the 24,954 causal triplets
+              extracted by Ronco et al. from 10 years of disaster news. The LLM cannot
+              introduce facts from outside that dataset.
             </p>
+
+            {/* Step-by-step flow */}
+            <div className="border border-border rounded-xl overflow-hidden">
+              <div className="bg-muted/30 px-4 py-2.5 border-b border-border">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  Three-step pipeline (runs once, offline)
+                </p>
+              </div>
+              <ol className="divide-y divide-border">
+                {[
+                  {
+                    step: "1",
+                    title: "Embed & index the full triplet corpus",
+                    detail:
+                      "Every triplet in triplets_global.json is converted to a dense vector using sentence-transformers/all-MiniLM-L6-v2 and stored in an in-memory LanceDB table. This produces a searchable semantic index of the entire dataset.",
+                  },
+                  {
+                    step: "2",
+                    title: "Retrieve the top-20 most relevant triplets",
+                    detail:
+                      "Each analytical question is embedded with the same model. A cosine-similarity search returns the 20 triplets whose meaning is closest to the question. Optional filters (e.g. disaster type = \"Flood\", relation = \"causes\") narrow retrieval further before fallback to the full corpus if fewer than 5 matches are found.",
+                  },
+                  {
+                    step: "3",
+                    title: "Generate a narrative — from retrieved triplets only",
+                    detail:
+                      "The 20 retrieved triplets are formatted as a numbered evidence list and passed to Gemini 2.5 Flash alongside a strict system prompt. The model is instructed to answer using ONLY those triplets, to reference specific causal relationships, to be precise about geography and time period, and to explicitly state when the evidence is insufficient for a strong conclusion.",
+                  },
+                ].map(({ step, title, detail }) => (
+                  <li key={step} className="flex gap-4 px-4 py-3.5">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
+                      {step}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-foreground text-xs mb-1">{title}</p>
+                      <p className="text-muted-foreground text-xs leading-relaxed">{detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Why this reduces hallucination */}
+            <div className="bg-secondary/40 border border-secondary rounded-lg px-4 py-3.5 space-y-2 text-xs">
+              <p className="font-semibold text-foreground">Why this reduces hallucination and out-of-scope claims</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <span className="font-semibold text-foreground">Closed context window:</span>{" "}
+                  The model receives no internet access and no free-form background knowledge
+                  prompt. Its only input is the numbered list of retrieved triplets plus the
+                  question. Any claim it makes must be traceable to a specific triplet in that list.
+                </li>
+                <li>
+                  <span className="font-semibold text-foreground">Explicit uncertainty instruction:</span>{" "}
+                  The system prompt requires the model to state explicitly when the evidence
+                  is insufficient rather than speculating. Vague or sparse evidence surfaces
+                  as caveated language in the narrative.
+                </li>
+                <li>
+                  <span className="font-semibold text-foreground">Dataset scope is the bias boundary:</span>{" "}
+                  The remaining risk of bias comes from the source data itself — EMM coverage
+                  gaps, the original LLM extraction errors (precision ≈ 0.67 per expert
+                  validation), and the 12 pre-defined question framings — not from the
+                  synthesis model adding external world knowledge.
+                </li>
+                <li>
+                  <span className="font-semibold text-foreground">No live inference:</span>{" "}
+                  All 12 insights are generated once offline and committed to the repository
+                  as static JSON. Users read fixed, auditable outputs, not live generations.
+                  The run timestamp is shown on every insight card.
+                </li>
+              </ul>
+            </div>
+
+            {/* Technical config */}
             <div className="bg-muted/40 border border-border rounded-lg px-4 py-3 space-y-2">
-              <div className="grid grid-cols-[140px_1fr] gap-1 text-xs">
+              <p className="text-xs font-semibold text-foreground mb-2">Technical configuration</p>
+              <div className="grid grid-cols-[160px_1fr] gap-1 text-xs">
                 <span className="font-semibold text-muted-foreground">Model</span>
-                <code className="font-mono">claude-3-5-sonnet-20241022</code>
+                <code className="font-mono">gemini-2.5-flash</code>
                 <span className="font-semibold text-muted-foreground">Provider</span>
-                <span>Anthropic (API)</span>
-                <span className="font-semibold text-muted-foreground">Run mode</span>
-                <span>One-time offline run · outputs committed to repository</span>
+                <span>Google AI Studio (API)</span>
                 <span className="font-semibold text-muted-foreground">Embedding model</span>
                 <code className="font-mono">sentence-transformers/all-MiniLM-L6-v2</code>
                 <span className="font-semibold text-muted-foreground">Vector store</span>
-                <span>LanceDB (in-memory, offline only)</span>
+                <span>LanceDB (in-memory, offline only — not deployed)</span>
                 <span className="font-semibold text-muted-foreground">Retrieval k</span>
                 <span>Top-20 semantically similar triplets per question</span>
                 <span className="font-semibold text-muted-foreground">Questions answered</span>
                 <span>12 pre-defined analytical questions (see Insights page)</span>
-                <span className="font-semibold text-muted-foreground">Run timestamp</span>
-                <span>Disclosed per insight card (stored in insights.json)</span>
+                <span className="font-semibold text-muted-foreground">Run mode</span>
+                <span>One-time offline script · outputs stored as static JSON</span>
               </div>
             </div>
+
             <CollapsibleCode
               label="View full system prompt (verbatim)"
               content={SYSTEM_PROMPT}
             />
+
             <p className="text-xs text-muted-foreground">
-              Confidence scores on each insight card are computed by cross-referencing
-              the disaster types of retrieved triplets against the expert validation
-              precision scores from{" "}
-              <code className="font-mono bg-muted px-1 rounded">triplet_expert_val.xlsx</code>.
+              Confidence scores on each insight card are cross-referenced from the expert
+              validation precision scores in{" "}
+              <code className="font-mono bg-muted px-1 rounded">triplet_expert_val.xlsx</code>
+              {" "}by matching the disaster types of the retrieved triplets.
             </p>
           </div>
         </section>
@@ -273,9 +351,9 @@ export default function MethodologyPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-foreground">AI synthesis scope:</span>{" "}
-                  The Claude-generated insights on the Insights page are constrained to the
+                  The AI-generated insights on the Insights page are constrained via RAG to the
                   retrieved triplets only. They cannot make claims beyond what the source data
-                  contains.
+                  contains (see section 3).
                 </li>
                 <li>
                   <span className="font-semibold text-foreground">Static snapshots:</span>{" "}
@@ -288,6 +366,75 @@ export default function MethodologyPage() {
                   disaster-response decision-making.
                 </li>
               </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 7. Tech Stack */}
+        <section>
+          <SectionHeading num="7" title="This Site's Tech Stack" />
+          <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
+            <p>
+              The visualization is a statically-exported Next.js application — all pages
+              are pre-rendered and all data is served as static JSON files. There is no
+              server-side logic at runtime, no database, and no live API calls to any
+              external service when a user browses the site.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                {
+                  category: "Framework & language",
+                  items: ["Next.js 15 (App Router)", "TypeScript", "React 19"],
+                },
+                {
+                  category: "Styling & UI",
+                  items: ["Tailwind CSS", "shadcn/ui (Radix primitives)", "Lucide icons"],
+                },
+                {
+                  category: "Charts & visualisation",
+                  items: [
+                    "Recharts — bar, donut, sparkline",
+                    "React Force Graph 2D — knowledge graph",
+                    "React-Leaflet — Leaflet world map",
+                  ],
+                },
+                {
+                  category: "Offline data pipeline (Python)",
+                  items: [
+                    "pandas, numpy — data processing",
+                    "pycountry — ISO code resolution",
+                    "sentence-transformers — triplet embeddings",
+                    "LanceDB — vector search (in-memory)",
+                    "google-generativeai — Gemini 2.5 Flash API",
+                  ],
+                },
+                {
+                  category: "Deployment",
+                  items: ["Vercel (static hosting)", "GitHub (source + CI/CD)"],
+                },
+                {
+                  category: "Data format",
+                  items: [
+                    "All runtime data served as static JSON from /public/data/",
+                    "No server-side database or API",
+                    "Pre-generated insights stored as insights.json",
+                  ],
+                },
+              ].map(({ category, items }) => (
+                <div key={category} className="bg-card border border-border rounded-lg px-4 py-3">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                    {category}
+                  </p>
+                  <ul className="space-y-1">
+                    {items.map((item) => (
+                      <li key={item} className="text-xs text-foreground/80 flex gap-1.5">
+                        <span className="text-primary mt-px">·</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </section>
