@@ -21,7 +21,7 @@ FILES = [
     {
         "name": "DisasterStory.csv",
         "url": "https://zenodo.org/records/18598183/files/DisasterStory.csv?download=1",
-        "description": "Main results: 1,424 disaster events with storylines and causal knowledge graph triplets",
+        "description": "Main results: 3,158 disaster events with storylines and causal knowledge graph triplets",
     },
     {
         "name": "triplet_expert_val.xlsx",

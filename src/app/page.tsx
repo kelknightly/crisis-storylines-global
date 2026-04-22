@@ -62,7 +62,7 @@ export default function HomePage() {
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
               An interactive visualization of 10 years of global disaster causal knowledge
-              graphs, aggregated from 1,424 disaster events across 2014–2024. Built on the
+              graphs, aggregated from 3,158 disaster events across 2014–2024. Built on the
               open dataset of Ronco et al. (2026).
             </p>
 

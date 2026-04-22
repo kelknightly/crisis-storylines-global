@@ -8,7 +8,7 @@ interface AiGeneratedBadgeProps {
 }
 
 export default function AiGeneratedBadge({
-  model = "claude-3-5-sonnet",
+  model = "gemini-2.5-flash",
   runDate,
   className,
 }: AiGeneratedBadgeProps) {

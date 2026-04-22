@@ -49,7 +49,7 @@ export default function InsightsPage() {
               , retrieving the top {data?.topK ?? 20} semantically relevant causal triplets
               from the dataset via LanceDB, then synthesising a response with{" "}
               <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">
-                {data?.model ?? "claude-3-5-sonnet-20241022"}
+                {data?.model ?? "gemini-2.5-flash"}
               </code>
               . Confidence scores are cross-referenced against the expert validation
               dataset (triplet_expert_val.xlsx).{" "}

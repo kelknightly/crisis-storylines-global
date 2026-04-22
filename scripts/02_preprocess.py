@@ -471,11 +471,21 @@ def main() -> None:
         "byDisasterType": by_type,
         "byRelation": {
             "causes": {
-                "precision": round(val_precision_overall + 0.02, 3),  # approximation
+                "precision": round(
+                    float(val.loc[val[rel_col].str.lower().str.contains("cause", na=False), "mean_score"].mean())
+                    if rel_col and expert_cols and val[rel_col].str.lower().str.contains("cause", na=False).any()
+                    else val_precision_overall,
+                    3,
+                ),
                 "count": len([t for t in all_triplets if t["relation"] == "causes"]),
             },
             "prevents": {
-                "precision": round(max(0, val_precision_overall - 0.04), 3),
+                "precision": round(
+                    float(val.loc[val[rel_col].str.lower().str.contains("prevent", na=False), "mean_score"].mean())
+                    if rel_col and expert_cols and val[rel_col].str.lower().str.contains("prevent", na=False).any()
+                    else val_precision_overall,
+                    3,
+                ),
                 "count": len([t for t in all_triplets if t["relation"] == "prevents"]),
             },
         },
