@@ -235,6 +235,18 @@ def call_gemini(client: "genai.Client", question: str, context: str) -> str:
                     max_output_tokens=MAX_TOKENS,
                 ),
             )
+            # Detect truncated response (finish_reason other than STOP/1)
+            finish_reason = None
+            try:
+                finish_reason = response.candidates[0].finish_reason
+            except Exception:
+                pass
+            # finish_reason == 2 means MAX_TOKENS (truncated)
+            if finish_reason is not None and str(finish_reason) not in ("1", "STOP", "FinishReason.STOP"):
+                wait = 8 * (attempt + 1)
+                print(f"    ⚠ Truncated response (finish_reason={finish_reason}) on attempt {attempt + 1}, retrying in {wait}s…")
+                time.sleep(wait)
+                continue
             return response.text
         except Exception as e:
             if "503" in str(e) or "UNAVAILABLE" in str(e):
@@ -243,7 +255,7 @@ def call_gemini(client: "genai.Client", question: str, context: str) -> str:
                 time.sleep(wait)
             else:
                 raise
-    raise RuntimeError("Gemini API unavailable after 5 retries")
+    raise RuntimeError("Gemini API unavailable or response truncated after 5 retries")
 
 
 def cross_ref_validation(triplets: list[dict], val_data: dict) -> tuple[float, str]:
@@ -321,7 +333,9 @@ def main() -> None:
             with open(out_path) as f:
                 existing = json.load(f)
             for item in existing.get("insights", []):
-                if item.get("tripletsRetrievedCount", 0) > 0 and len(item.get("narrative", "")) > 50:
+                narrative = item.get("narrative", "")
+                narrative_complete = narrative.strip().endswith(('.', '!', '?'))
+                if item.get("tripletsRetrievedCount", 0) > 0 and len(narrative) > 50 and narrative_complete:
                     existing_by_id[item["id"]] = item
             if existing_by_id:
                 print(f"  ↩ Skipping {len(existing_by_id)} already-successful insight(s)\n")
@@ -365,7 +379,7 @@ def main() -> None:
                     "disasterType": t["disasterType"],
                     "country": t["country"],
                     "year": t["year"],
-                    "expertVerified": precision >= 0.7,
+                    "highConfidence": precision >= 0.7,
                 })
 
             # Collect unique disaster types and regions from evidence

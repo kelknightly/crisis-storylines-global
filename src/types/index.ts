@@ -114,7 +114,7 @@ export interface EvidenceTriplet {
   disasterType: string;
   country: string;
   year: number;
-  expertVerified: boolean;
+  highConfidence: boolean;
 }
 
 export interface Insight {

@@ -303,6 +303,7 @@ export default function ForceGraphViz({
         linkCanvasObjectMode={() => "after"}
         backgroundColor="#ffffff"
         cooldownTicks={150}
+        onEngineStop={() => fgRef.current?.zoomToFit(400, 40)}
         onNodeClick={handleNodeClick}
         onBackgroundClick={handleBackgroundClick}
         nodeLabel={(node: Record<string, unknown>) =>

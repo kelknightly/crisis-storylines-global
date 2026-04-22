@@ -19,13 +19,48 @@ const BORDER_COLOR: Record<string, string> = {
   "Model Generated": "border-l-[oklch(0.6_0.13_15)]",
 };
 
+/** Renders inline text that may contain **bold** markers. */
+function BoldText({ text }: { text: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith("**") && part.endsWith("**")
+          ? <strong key={i}>{part.slice(2, -2)}</strong>
+          : <span key={i}>{part}</span>
+      )}
+    </>
+  );
+}
+
+/** Renders a paragraph string that may contain **bold** and ==highlight== markers (nestable). */
+function RichText({ text }: { text: string }) {
+  // Split on ==...== first, then handle **bold** inside each segment
+  const parts = text.split(/(==[\s\S]+?==)/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (part.startsWith("==") && part.endsWith("==")) {
+          return (
+            <mark
+              key={i}
+              className="rounded px-0.5"
+              style={{ background: "oklch(0.93 0.09 85 / 0.55)", color: "inherit" }}
+            >
+              <BoldText text={part.slice(2, -2)} />
+            </mark>
+          );
+        }
+        return <BoldText key={i} text={part} />;
+      })}
+    </>
+  );
+}
+
 export default function InsightCard({ insight, index }: Props) {
   const [open, setOpen] = useState(false);
-  const [showFull, setShowFull] = useState(false);
 
   const paras = insight.narrative ? insight.narrative.split("\n\n").filter(Boolean) : [];
-  const keyFinding = paras[0] ?? "";
-  const restParas = paras.slice(1);
 
   const borderClass = BORDER_COLOR[insight.confidenceLabel] ?? "border-l-border";
 
@@ -56,45 +91,11 @@ export default function InsightCard({ insight, index }: Props) {
         </div>
 
         {/* Narrative */}
-        {keyFinding ? (
-          <div className="space-y-3">
-            {/* Key Finding callout */}
-            <div
-              className="rounded-lg px-4 py-3 border-l-4 text-sm leading-relaxed"
-              style={{
-                background: "oklch(0.97 0.04 70 / 0.55)",
-                borderLeftColor: "oklch(0.78 0.12 70)",
-              }}
-            >
-              <p className="text-[10px] font-semibold uppercase tracking-wider mb-1.5"
-                style={{ color: "oklch(0.58 0.12 70)" }}>
-                Key Finding
-              </p>
-              <p className="text-foreground/90">{keyFinding}</p>
-            </div>
-
-            {/* Full analysis expand/collapse */}
-            {restParas.length > 0 && (
-              <>
-                {showFull && (
-                  <div className="prose prose-sm max-w-none text-foreground/80 leading-relaxed pt-1">
-                    {restParas.map((para, i) => (
-                      <p key={i} className="mb-3 last:mb-0 text-sm">{para}</p>
-                    ))}
-                  </div>
-                )}
-                <button
-                  onClick={() => setShowFull((s) => !s)}
-                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {showFull ? (
-                    <><ChevronUp className="w-3.5 h-3.5" /> Collapse analysis</>
-                  ) : (
-                    <><ChevronDown className="w-3.5 h-3.5" /> Show full analysis ({restParas.length} more {restParas.length === 1 ? "paragraph" : "paragraphs"})</>
-                  )}
-                </button>
-              </>
-            )}
+        {paras.length > 0 ? (
+          <div className="space-y-3 text-sm leading-relaxed text-foreground/85">
+            {paras.map((para, i) => (
+              <p key={i}><RichText text={para} /></p>
+            ))}
           </div>
         ) : (
           <p className="text-sm text-muted-foreground italic">

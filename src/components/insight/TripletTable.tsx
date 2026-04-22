@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CheckCircle2, Circle, ChevronLeft, ChevronRight } from "lucide-react";
 import type { EvidenceTriplet } from "@/types";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 const PAGE_SIZE = 10;
 
@@ -40,11 +41,24 @@ export default function TripletTable({ triplets, limit }: Props) {
             {shown.map((t, i) => (
               <tr key={page * PAGE_SIZE + i} className="border-b border-border/50 hover:bg-muted/40 transition-colors">
                 <td className="py-1.5 pr-3">
-                  {t.expertVerified ? (
-                    <span title="Expert verified"><CheckCircle2 className="w-3.5 h-3.5 text-[oklch(0.67_0.1_152)]" /></span>
-                  ) : (
-                    <span title="Model generated"><Circle className="w-3.5 h-3.5 text-muted-foreground" /></span>
-                  )}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span>
+                          {t.highConfidence ? (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[oklch(0.67_0.1_152)]" />
+                          ) : (
+                            <Circle className="w-3.5 h-3.5 text-muted-foreground" />
+                          )}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {t.highConfidence
+                          ? "High confidence (≥70% model precision for this disaster type)"
+                          : "Standard confidence"}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </td>
                 <td className="py-1.5 pr-3 font-mono text-foreground/80">{t.source}</td>
                 <td className="py-1.5 pr-3">
