@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-04-22T02:53:46.527303+00:00",
+  "generatedAt": "2026-04-22T03:11:17.315053+00:00",
   "model": "gemini-2.5-flash",
   "modelVersion": "gemini-2.5-flash",
   "embeddingModel": "sentence-transformers/all-MiniLM-L6-v2",
   "topK": 100,
-  "totalApiCalls": 12,
+  "totalApiCalls": 1,
   "insights": [
     {
       "id": "insight_01",
       "question": "What are the most common human-caused drivers of floods globally?",
-      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), there are a limited number of explicitly human-caused drivers identified as directly leading to floods. These include \"human interventions\" causing flooding in Pakistan in 2017, \"human activities\" causing flooding in Türkiye in 2023, and \"pollution\" leading to floods in Brazil in 2022.\n\nEach of these specific human-caused drivers appears only once in the provided data, across different countries and years within the 10-year period. Other causes of floods identified, such as \"heavy rainstorms,\" \"rainstorms,\" \"heavy rain,\" \"storms,\" \"mudslides,\" and \"violent storms,\" are natural meteorological or geological phenomena.\n\nGiven that each human-caused driver—\"human interventions,\" \"human activities,\" and \"pollution\"—is mentioned only once in the retrieved evidence, the provided data is insufficient to conclude which human-caused drivers are \"most common globally.\" The dataset only provides examples of specific instances where these factors were identified as causes of floods.",
+      "narrative": "Based on the provided data from the crisesStorylinesRAG dataset (2014–2024), specific human-caused drivers for floods are infrequently reported. The dataset indicates that \"human interventions\" caused flooding in Pakistan in 2017, and \"human activities\" caused flooding in Türkiye in 2023. Additionally, \"pollution\" was identified as a cause of floods in Brazil in 2022.\n\nGiven the limited number of instances where human-caused drivers are explicitly mentioned in these triplets (three out of 100), the provided evidence is insufficient to determine the \"most common\" human-caused drivers of floods globally. While human actions are implicated, the data does not offer a broad enough representation to establish prevalence or identify specific common drivers across different regions.",
       "evidenceTriplets": [
         {
           "source": "floods",
@@ -1016,27 +1016,27 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
         "Flood"
       ],
       "relatedRegions": [
-        "North America",
-        "Oceania",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
+        "North America",
+        "Latin America & Caribbean",
         "Sub-Saharan Africa",
-        "South Asia",
-        "East Asia & Pacific"
+        "South Asia"
       ]
     },
     {
       "id": "insight_02",
       "question": "How do the primary causal drivers of floods in Southeast Asia compare to those in Europe?",
-      "narrative": "Based on the retrieved triplets from the crisesStorylinesRAG dataset (2014–2024), floods in Southeast Asian countries are primarily driven by various forms of rainfall and associated meteorological phenomena. In Indonesia, common drivers include heavy rain (e.g., 2024, 2023), incessant rain (2021, 2015), high rainfall (2020), torrential rains (2020), and strong winds (2023), with heavy rainfall and atmospheric dynamics also noted. Thailand experiences floods caused by heavy rainfall (e.g., 2024, 2022), heavy rains (2022), torrential rain (2023), and monsoon activity (2023). In Malaysia, floods are attributed to the rainy season (2020), tropical storms (2022), and notably, river pollution causing flash floods (2022). The Philippines sees floods from massive rains (2023), monsoon rains (2016), tropical storms (2016), and the northeast monsoon (2023), while Viet Nam also cites heavy rains (2016). Flash floods are also listed as direct causes of flooding in Thailand (e.g., 2016, 2023).\n\nConversely, the dataset provides very limited information regarding flood drivers in Europe. For Georgia, the only European country mentioned, \"early study\" is identified as preventing floods (2018), but no direct primary causal drivers *of* floods are listed.\n\nTherefore, while the data clearly identifies diverse rainfall types and weather systems as the primary drivers of floods across Indonesia, Thailand, Malaysia, the Philippines, and Viet Nam, it is insufficient to compare these drivers with those in Europe. The dataset does not explicitly provide causal drivers for floods occurring in Europe.",
+      "narrative": "Based on the provided data, the primary causal drivers of floods in Southeast Asia are extensively documented, primarily revolving around various forms of rainfall and weather systems. For instance, in Indonesia, floods are attributed to heavy rain (e.g., [19, 53]), rains ([25]), high rainfall ([26, 55]), incessant rains ([41]), torrential rains ([45]), and strong winds ([88]). Similarly, in Thailand, heavy rainfall ([22, 63]), heavy rains ([57]), monsoon ([80]), and torrential rain ([96]) are identified as causes of flooding. Malaysia experiences floods due to rainy season ([27]) and tropical storms ([92]), while the Philippines is impacted by massive rains ([34]), monsoon rains ([40]), tropical storm ([44]), and the northeast monsoon ([71]).\n\nIn contrast, the provided context offers no information regarding the primary causal drivers of floods in Europe. The only triplet referencing a European country (Georgia) describes \"early study\" preventing floods ([69]), which is a preventative measure rather than a causal driver of the flood event itself.\n\nTherefore, while the dataset clearly indicates that meteorological factors, particularly intense or prolonged rainfall and storm systems, are the predominant causes of floods across various Southeast Asian nations between 2014 and 2024, there is insufficient evidence in the retrieved triplets to draw any comparison with the causal drivers of floods in Europe.",
       "evidenceTriplets": [
         {
           "source": "floods",
@@ -2043,22 +2043,22 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
         "Flood"
       ],
       "relatedRegions": [
-        "South Asia",
-        "Central Asia",
         "Southeast Asia",
-        "East Asia & Pacific"
+        "East Asia & Pacific",
+        "South Asia",
+        "Central Asia"
       ]
     },
     {
       "id": "insight_03",
       "question": "What are the most repeated failure points in disaster response across all disaster types?",
-      "narrative": "Based on the retrieved causal triplets, no single specific failure point in disaster response is explicitly \"most repeated\" across all disaster types, as each distinct failure description appears only once in the dataset. However, the evidence reveals several critical and recurring *types* of failures related to the effectiveness and timeliness of disaster response and management.\n\nKey failure points identified include \"organizational failures\" which caused a rail disaster in India in 2018, and \"ineffective response\" leading to fatalities during a flood in Jordan in 2018. Further examples show that \"chaotic event management\" contributed to fatalities during a storm in China in 2021, and \"hindered rescue\" resulted in fatalities during a fire in China in 2022. Additionally, a \"lack of emergency response\" caused fatalities during an explosion in Pakistan in 2017, and \"delayed response\" led to increased fatalities during a flood in India in 2014.\n\nCollectively, these instances highlight deficiencies in the execution, coordination, and timeliness of direct emergency and rescue operations as critical failure points across diverse disaster types like rail incidents, floods, storms, fires, and explosions, spanning from 2014 to 2022 across multiple countries. While the exact wording for each failure point varies, the overarching theme is that an inadequate or delayed response significantly contributes to negative outcomes such as fatalities and increased casualties.",
+      "narrative": "Based on the provided causal triplets, there is no single failure point phrase explicitly repeated as a direct *cause* of negative outcomes in disaster response. However, the data identifies several distinct failures that directly cause adverse effects. These include \"ineffective response\" causing fatalities during a Flood in Jordan in 2018, \"chaotic event management\" causing fatalities during a Storm in China in 2021, \"hindered rescue\" causing fatalities during a Fire in China in 2022, \"lack of emergency response\" causing fatalities during an Explosion in Pakistan in 2017, \"delayed response\" leading to increased fatalities during a Flood in India in 2014, and \"lack of preparedness\" causing fatalities during a Flood in Bulgaria in 2014. Additionally, a \"secondary disaster\" in China in 2017 caused the \"suspension of rescue\" during a Mass movement (wet) event.\n\nWhile these specific phrases are not repeated, the triplets frequently highlight crucial disaster management actions that *prevent* negative outcomes. By inferring that the *absence or inadequacy* of these actions constitutes a failure point, several key areas emerge as most repeated. \"Disaster relief\" is noted four times as preventing fatalities (Flood, China, 2019), losses (Flood, China, 2016), and economic damage (Storm, China, 2016; Earthquake, China, 2015). Similarly, \"disaster management\" appears four times, preventing injuries and fatalities (Fire, South Africa, 2024), and infrastructure and economic damage (Storm, South Africa, 2017). The repeated emphasis on these functions across various disaster types (Floods, Storms, Earthquakes, Fires) and countries (China, South Africa) from 2015 to 2024 suggests that failures in providing adequate disaster relief and comprehensive disaster management are consistently critical issues in disaster response.\n\nOther frequently cited preventive measures, whose lack would also be significant failure points, include \"disaster risk reduction\" (4 instances) and \"disaster mitigation\" (4 instances), primarily preventing injuries, damage, and fatalities. \"Disaster preparedness\" (3 instances) and \"disaster risk management\" (3 instances) are also repeatedly mentioned as critical for preventing fatalities, infrastructure damage, economic damage, and humanitarian crises across diverse global events from 2015 to 2023. These insights collectively point to systemic weaknesses in planning, managing, and executing effective relief and recovery efforts as recurring failure points in disaster response.",
       "evidenceTriplets": [
         {
           "source": "disaster prediction",
@@ -3065,36 +3065,36 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
-        "Rail",
-        "Water",
         "Flood",
+        "Earthquake",
+        "Rail",
         "Storm",
-        "Road",
-        "Mass movement (wet)",
-        "Explosion (Miscellaneous)",
         "Fire (Miscellaneous)",
-        "Earthquake"
+        "Explosion (Miscellaneous)",
+        "Water",
+        "Road",
+        "Mass movement (wet)"
       ],
       "relatedRegions": [
-        "North America",
-        "Oceania",
-        "Central Asia",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
+        "North America",
+        "Latin America & Caribbean",
         "Sub-Saharan Africa",
         "South Asia",
-        "East Asia & Pacific"
+        "Central Asia"
       ]
     },
     {
       "id": "insight_04",
       "question": "What prevention and early warning measures are most commonly cited across all disaster types?",
-      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), the most commonly cited prevention and early warning measures are \"Early Warning\" (including various forms of alerts and warnings), followed by \"Preparedness\" measures, and then \"Disaster Risk Reduction/Mitigation\" strategies.\n\nSpecifically, \"Early Warning\" appears as the most frequent measure, encompassing terms such as \"early warning\" (16 instances), \"early warning systems\" (3 instances), \"timely warning\" (2 instances), \"emergency warning\" (2 instances), \"warning\" (3 instances), \"alerts\" (1 instance), \"flood warning\" (2 instances), \"storm warning\" (1 instance), and \"evacuation notices/alerts/warnings\" (3 instances), among others. This broad category collectively accounts for 42 explicit mentions across various disaster types like floods, storms, earthquakes, extreme temperatures, and a rail incident, preventing outcomes such as fatalities, damage, casualties, and injuries in countries including the United States, China, Indonesia, and Japan.\n\nThe second most frequently cited category is \"Preparedness,\" with 15 instances. This includes \"disaster preparedness\" (3 instances), \"emergency preparedness\" (3 instances), \"preparedness\" (2 instances), \"community preparedness\" (1 instance), \"disaster preparation\" (1 instance), \"emergency preparations\" (2 instances), \"preparation\" (1 instance), \"effective preparedness\" (1 instance), and \"preparedness measures\" (1 instance). These measures are noted for preventing fatalities, economic damage, infrastructure damage, and flooded homes, primarily for storms and floods across countries like the United States, Japan, and Haiti.\n\nFollowing these, \"Disaster Risk Reduction/Mitigation\" measures are cited 12 times, including \"disaster risk reduction\" (4 instances), \"disaster mitigation\" (3 instances), \"hazard mitigation\" (1 instance), \"disaster risk management\" (2 instances), \"prevention\" (1 instance), and \"preventive measures\" (1 instance). These are linked to preventing fatalities, injuries, and various forms of damage (e.g., infrastructure, general damage) in earthquakes, floods, storms, and mass movements in countries like Indonesia, the Philippines, and Mozambique. Other notable prevention measures include various \"Safety/Precautions\" (9 instances) and \"Disaster Management\" (2 instances).",
+      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), the most commonly cited prevention and early warning measure across all disaster types is **early warning and alert systems**. This category, encompassing various forms of warnings such as \"early warning,\" \"effective warning,\" \"timely warning,\" \"emergency warning,\" \"alerts,\" \"flood warning,\" \"evacuation notices,\" and \"disaster prediction,\" appears a remarkable 40 times in the dataset. These warnings are consistently cited as preventing fatalities, damage, casualties, injuries, and other negative impacts across floods, storms, earthquakes, and even extreme temperature events in countries like the United States, China, Indonesia, Japan, and many others globally.\n\nFollowing early warning, **mitigation and prevention strategies** are the next most frequently mentioned, with 19 instances. This category includes measures like \"disaster risk reduction,\" \"disaster mitigation,\" \"safety measures,\" \"disaster management,\" and \"preventive measures,\" which are applied across various disaster types from floods to earthquakes in countries such as Indonesia, China, and the Philippines. Closely related are **preparedness measures**, which are cited 16 times. This group includes \"disaster preparedness,\" \"emergency preparedness,\" \"community preparedness,\" and \"disaster plans,\" highlighting a broad emphasis on readying communities and systems to cope with impending hazards across different regions like the United States, Japan, and Germany.\n\nOther measures, though less frequent, still contribute to prevention outcomes. \"Precautions\" (6 mentions), \"response and relief efforts\" (",
       "evidenceTriplets": [
         {
           "source": "disaster preparedness",
@@ -4101,36 +4101,36 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
-        "Rail",
         "Flood",
-        "Extreme temperature",
-        "Miscellaneous accident (General)",
+        "Earthquake",
+        "Rail",
         "Storm",
-        "Road",
-        "Mass movement (wet)",
         "Fire (Miscellaneous)",
-        "Earthquake"
+        "Miscellaneous accident (General)",
+        "Road",
+        "Extreme temperature",
+        "Mass movement (wet)"
       ],
       "relatedRegions": [
-        "Oceania",
         "Other",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
-        "South Asia",
-        "Sub-Saharan Africa",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
         "North America",
-        "East Asia & Pacific"
+        "Latin America & Caribbean",
+        "Sub-Saharan Africa",
+        "South Asia"
       ]
     },
     {
       "id": "insight_05",
       "question": "What secondary hazards and cascade effects are most commonly triggered by earthquakes?",
-      "narrative": "Based on the analysis of the crisesStorylinesRAG dataset from 2014–2024, earthquakes are consistently shown to trigger a wide range of secondary hazards and cascade effects globally. The most frequently reported consequence across various countries, including Mexico, China, Japan, and the United States, is significant **structural, property, and infrastructure damage**. This category includes specific mentions of infrastructure damage (e.g., in the United States in 2016 and Cuba in 2024), collapses (Mexico 2017, Peru 2014), home destruction (Puerto Rico 2020, Indonesia 2018), house/home collapse (China 2021, Ecuador 2022), general building or property damage, and damage to roads and health facilities (Afghanistan 2023), collectively appearing in 26 instances.\n\nFollowing structural damage, **utility and service disruptions** are also highly prevalent, with 14 recorded instances. These include power disruption (Mexico 2017), outages (Cuba 2024), blackouts (Japan 2016), water disruption and leaks (Mexico 2017, United States 2016), gas leaks (United States 2016), communication disruptions (China 2017, Thailand 2014), and broader disruptions of services (Guatemala 2017) and transport (China 2022). Furthermore, earthquakes frequently lead to **human impacts**, with nine instances citing fatalities, casualties, injuries, people affected, or trauma across countries like the United States (2014, 2022), Japan (2016), Puerto Rico (2020), and Peru (2021).\n\nOther significant secondary hazards and cascade effects include **land movement**, such as landslides (Mexico 2020, China 2022, Indonesia 2024), rockslides (Iran 2018), and avalanches (Italy 2017), appearing in five instances. **Population displacement, relocation, or evacuation** is also noted in four instances (Puerto Rico 2020, Japan 2016, China 2014, Iceland 2023). Less frequently, the data shows earthquakes directly triggering tsunamis (Chile 2015), often preceded by ground shaking (New Zealand 2016), and fires (United States 2019), as well as causing economic damage (United States 2016, Cuba 2024) and animal casualties (China 2017).",
+      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), earthquakes commonly trigger a range of secondary hazards and cascade effects across various geographies, including the United States, Japan, Mexico, China, and Puerto Rico. The most frequently mentioned direct secondary hazards involve damage to the built environment. This encompasses various forms of infrastructure damage (mentioned 2 times, e.g., in United States 2016, Cuba 2024), building and home damage/destruction/collapse (mentioned 15 times, e.g., home destruction in Puerto Rico 2020, China 2016, Indonesia 2018; house damage in Mexico 2014; building damage in China 2017; structural damage in Mexico 2021), and collapses (mentioned 2 times, e.g., Mexico 2017, Peru 2014). This category collectively represents the most pervasive immediate impact.\n\nBeyond structural damage, significant human impacts are also commonly observed. Fatalities, deaths, casualties, and injuries are frequently reported (a combined 8 instances, e.g., fatalities in United States 2014, Japan 2016; injuries in United States 2022, Philippines 2019). Additionally, disruptions to essential services and infrastructure are prominent, with communication disruptions (2 instances, e.g., China 2017, Thailand 2014), power disruptions (Mexico 2017",
       "evidenceTriplets": [
         {
           "source": "earthquake",
@@ -5137,29 +5137,29 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
         "Earthquake"
       ],
       "relatedRegions": [
-        "Oceania",
-        "Central Asia",
         "Other",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
         "South Asia",
-        "Sub-Saharan Africa",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
         "North America",
-        "East Asia & Pacific"
+        "Latin America & Caribbean",
+        "Sub-Saharan Africa",
+        "Central Asia"
       ]
     },
     {
       "id": "insight_06",
       "question": "What are the primary causal chains in wildfire events, and how do climate and human factors interact?",
-      "narrative": "Wildfire events documented between 2014 and 2024 reveal primary causal chains originating from both human and climatic factors, leading to a range of severe impacts. Human activities consistently cause wildfires across various regions and years, including \"human action\" (United States, 2021), \"human activity\" (Canada, 2024; Republic of Korea, 2022), \"reckless behavior\" (Australia, 2019), \"negligence\" (Chile, 2022), \"arson\" (United States, 2024), and \"careless fire handling\" (Ukraine, 2020). Interestingly, some human interventions, such as \"prescribed fire\" (United States, 2022) and \"controlled burning\" (Russian Federation, 2015), are also recorded as causing wildfires, highlighting the complex nature of fire management. Simultaneously, adverse climate and environmental conditions are frequent triggers, with \"dry conditions\" (United States, 2023, 2020, 2022), \"heat\" or \"hot temperatures/conditions\" (United States, 2015, 2022, 2023, 2024; Canada, 2016, 2023, 2024; France, 2023; Australia, 2021; Chile, 2024; China, 2019), and \"drought conditions\" (United States, 2016, 2020, 2021, 2022) appearing repeatedly as direct causes or causes of fire spread.\n\nThe impacts of wildfires are extensive and diverse, affecting human life, property, economies, and the environment. Direct human impacts include \"casualties,\" \"deaths,\" or \"fatalities\" (United States, 2015, 2016, 2020, 2024; Canada, 2015; China, 2020; Spain, 2017; Republic of Korea, 2023; Australia, 2015), \"health risks\" and \"air quality concerns\" (United States, 2021, 2023; Canada, 2024), \"displacement\" and \"evacuations\" (United States, 2023; Canada, 2024; Russian Federation, 2023), and \"disruption of life\" (Russian Federation, 2023). Property and economic damages are also significant, encompassing \"structure damage\" and \"home destruction\" (United States, 2024; Canada, 2023), \"property damage\" (United States, 2022), \"economic damage\" (United States, 2016), \"business damage\" (United States, 2021), and \"agricultural losses\" (United States, 2024). Environmentally, wildfires cause \"forest damage\" (Canada, 2015; Ukraine, 2020), \"ecological risk\" or \"ecological deterioration\" (China, 2019; Russian Federation, 2019), \"land burn\" (United States, 2015), and \"environmental damage\" (Greece, 2021). Prevention measures, such as \"firefighters\" (United States, 2021), \"controlled burns\" (United States, 2015, 2024), \"fire breaks\" (United States, 2022), and \"early response\" (Spain, 2023), are also noted as mitigating wildfire or its spread.\n\nWhile the dataset primarily presents human and climate factors as distinct causal pathways for wildfires, an explicit interaction is highlighted where \"climate change\" (United States, 2021) leads to \"heat waves,\" and these \"heat waves\" (United States, 2020) subsequently cause \"wildfires.\" This demonstrates an indirect, compounding effect where broader climatic shifts create conditions that intensify wildfire risk. Although no triplets directly link specific human ignitions to climate-exacerbated conditions, the concurrent occurrence of both human-caused ignitions and severe climate conditions in various locations (e.g., Canada 2024, United States 2023) implies a complex interplay where human actions likely initiate fires within environments made more susceptible by climate-driven dry and hot weather.",
+      "narrative": "Wildfire events are primarily driven by a combination of adverse climatic conditions and various human activities across the globe, as evidenced by data from 2014–2024. Climatic factors frequently identified as causes include dry conditions (United States 2020, 2023), warm or hot conditions/weather/temperatures (Canada 2016, 2023, 2024; United States 2015, 2018, 2022, 2023, 2024; France 2023; Chile 2024; China 2019), heatwaves (United States 2020), extreme heat (United States 2024), and drought or drought conditions (United States 2016, 2020, 2021, 2022). Additionally, dry vegetation (United States 2022) is noted as a cause.\n\nConcurrently, human factors are consistently identified as direct causes of wildfires. These range from broad categories like \"human action\" (United States 2021), \"human factors\" (North Macedonia 2021), \"human activity\" (Canada 2018, 2024; Korea, Republic of 2022), and \"human-caused fires\" (Canada 2023; United States 2024), to more specific actions. These include malicious acts such as `arson` (United States 2016, 2024) and `reckless behavior` (Australia 2019), as well as unintentional `negligence` (Chile 2022) or `careless fire/fire handling` (Russian Federation 2021; Ukraine 2020). Interestingly, human interventions intended for land management, such as `prescribed fire` (United States 2022) and `controlled burning` (Russian Federation 2015), are also documented as causing wildfires in certain instances, highlighting the complex nature of human interaction with fire.\n\nThe interaction between climate and human factors is evident, particularly through the impact of climate change. Climate change is explicitly identified as a direct cause of wildfires (United States 2023; Spain 2017) and also indirectly contributes by causing `heat waves` (United States 2021), which in turn cause wildfires (United States 2020). While the dataset does not directly show human actions being influenced by specific climate conditions at the moment of ignition, the pervasive nature of both climate-driven conditions (like heat and drought) and human-caused ignitions indicates a compounding effect. For instance, dry conditions provide the fuel for fires, whether ignited by natural causes (not explicitly detailed as causes here, but inferred by absence of human element) or by the many documented human activities. The dual role of `controlled burns` (preventing wildfire spread in US 2015, preventing wildfire in US 2024, but causing wildfire in Russian Federation 2015 and 'prescribed fire' causing wildfire in US 2022) further exemplifies how human management, while attempting to mitigate risks exacerbated by climate, can itself contribute to the problem depending on execution.",
       "evidenceTriplets": [
         {
           "source": "human action",
@@ -6166,24 +6166,24 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
         "Wildfire"
       ],
       "relatedRegions": [
         "Oceania",
-        "Latin America & Caribbean",
         "North Africa & Middle East",
+        "East Asia & Pacific",
         "Europe",
         "North America",
-        "East Asia & Pacific"
+        "Latin America & Caribbean"
       ]
     },
     {
       "id": "insight_07",
       "question": "What factors most commonly drive population displacement and forced migration in disaster events?",
-      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset covering global disaster news between 2014 and 2024, the most common factor driving population displacement and forced migration is **flooding**. Events categorized as 'flood', 'flooding', or 'flash floods' are explicitly linked to outcomes such as 'population displacement', 'displacement', 'relocation', 'displaced people', 'refugees', 'evacuation', 'family displacement', or 'human displacement' in 13 instances. These impacts are observed across various countries including Russia (2018), China (2014, 2015, 2016), Brazil (2024), Uganda (2024), Philippines (2024), United States (2015, 2021), Somalia (2024), Albania (2015), Guatemala (2022), and Cameroon (2020).\n\nBeyond direct flooding, significant drivers of population movement include **infrastructure damage** (4 instances) and **home destruction or housing damage** (3 instances). Infrastructure damage led to displacement in the United States (2016), refugees in Indonesia (2023), relocation in China (2014), and evacuations in the United States (2016). Similarly, home destruction in Afghanistan (2024) and housing damage in Indonesia (2023) and the United States (2022) were reported to cause displacement or create refugees.\n\nOther factors, though less frequently, also contribute to population movement. **Economic damage** caused relocation in Bangladesh (2023) and displacement in the Philippines (2024), while **earthquakes** led to relocation in China (2014) and evacuation in Iceland (2023). Generic 'disaster' or 'disaster events' were also cited as causes for evacuation in Bangladesh (2015) and Italy (2015). Lastly, specific hazards like **landslides** (Brazil 2024, China 2024) and **tsunami** (Indonesia 2018), and socio-economic factors such as **vulnerability** (Madagascar 2024) and **poverty** (Mexico 2019), were also identified as drivers of displacement, relocation, migration, or the generation of displaced populations.",
+      "narrative": "Based on the causal triplets extracted from global disaster news between 2014 and 2024, the most common factor driving population displacement and forced migration outcomes (including relocation, refugees, and evacuations) is **flooding**. This includes various forms such as \"flood,\" \"floods,\" \"flooding,\" and \"flash floods,\" which collectively appear as causes in 13 instances across diverse regions including the Russian Federation (2018), China (2014, 2015, 2016), Brazil (2024), Uganda (2024), the Philippines (2024), the United States (2015, 2021), Somalia (2024), Guatemala (2022), Albania (2015), and Cameroon (2020).\n\nBeyond direct flooding events, significant drivers of displacement stem from the physical impacts of disasters on the built environment. \"Infrastructure damage\" (Indonesia 2023, China 2014, United States 2016), \"housing damage\" (Indonesia 2023, United States 2022), and \"home destruction\" (Afghanistan 2024) are collectively responsible for displacement in six documented instances. Other specific hazards also contribute, with \"earthquakes\" causing relocation or evacuation in China (2014) and Iceland (2023), \"mass movements\" or \"landslides\" leading to displaced people or relocation in Brazil (2024) and China (2024), and a \"tsunami\" displacing people in Indonesia (2018).\n\nAdditionally, broader \"disaster event\" or general \"damages\" led to evacuations or displacement in Bangladesh (2015), Italy (2015), and Indonesia (2021). Economic factors are also noted, with \"economic damage\" causing relocation or displacement in Bangladesh (2023) and the Philippines (2024). Less frequently, systemic factors such as \"vulnerability\" (Madagascar 2024) and \"poverty\" (Mexico 2019) are identified as drivers of displacement, though these appear only once each in the retrieved dataset.",
       "evidenceTriplets": [
         {
           "source": "population displacement",
@@ -7190,35 +7190,35 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
-        "Water",
         "Flood",
         "Epidemic",
+        "Earthquake",
         "Storm",
+        "Water",
         "Road",
-        "Mass movement (wet)",
-        "Earthquake"
+        "Mass movement (wet)"
       ],
       "relatedRegions": [
-        "North America",
-        "Oceania",
-        "Central Asia",
         "Other",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
+        "North America",
+        "Latin America & Caribbean",
         "Sub-Saharan Africa",
         "South Asia",
-        "East Asia & Pacific"
+        "Central Asia"
       ]
     },
     {
       "id": "insight_08",
       "question": "What are the most common drivers of high economic losses in disaster events?",
-      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), several categories of events are identified as recurring drivers of economic damage, losses, or impacts. The most frequently cited category of drivers includes **storm-related events**, accounting for eight distinct causal relationships within the dataset. Specific terms mentioned are \"severe storms\" (United States, 2023), \"severe weather\" (United States, 2022), \"tornadoes\" (United States, 2014), \"hurricane\" (United States, 2023), \"severe storm\" (United States, 2017), \"hurricanes\" (Virgin Islands, U.S., 2017), \"storm\" (United States, 2015), and \"storms\" (Italy, 2023).\n\nAnother significant cluster of drivers relates to **accidents and various forms of damage or disruption**. This includes \"accidents\" (Pakistan, 2017; Bangladesh, 2015), \"crash\" (United States, 2016), \"traffic crashes\" (United States, 2022), \"road disaster\" (Zimbabwe, 2017), \"air disaster\" (India, 2016), and the general term \"accident\" (Korea, Republic of, 2014). Furthermore, direct mentions of \"infrastructure damage\" (China, 2014; United States, 2018), \"infrastructure disruption\" (Malaysia, 2017), \"power loss\" (United States, 2021), \"transport disruption\" (China, 2016), and \"transportation disruptions\" (Japan, 2023) are also prominent causes of economic losses.\n\nOther drivers appearing multiple times include **flood-related events**, with \"flooding\" (China, 2014), \"flood disaster\" (India, 2014), \"floods\" (China, 2014), and \"flood\" (China, 2016; Tanzania, United Republic of, 2014) causing economic detriment. **Fires and wildfires** are also noted, with \"fire\" (Honduras, 2024; United States, 2016) and \"wildfires\" (United States, 2016) causing economic damage. \"Earthquakes\" (China, 2014, noted under a storm event; United States, 2014) and \"explosions\" (China, 2015; Cuba, 2022) also feature as specific causes of economic damage.\n\nIt is important to note that the dataset establishes a causal link to \"economic damage,\" \"economic loss,\" or \"economic impacts\" but does not quantify or define \"high economic losses.\" Therefore, while these are the most common drivers identified within this specific 10-year dataset (2014–2024) across various global locations, the degree of their economic impact for each event is not specified.",
+      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), the most common drivers of economic losses in disaster events can be categorized into several key types.\n\nThe most frequently cited direct causes of economic damage, losses, or impacts are **physical damages and disruptions**, with 10 instances across various event types. This category includes specific factors like \"infrastructure damage\" (China 2014, United States 2018), \"transport disruption\" (China 2016), \"transportation disruptions\" (Japan 2023), \"infrastructure disruption\" (Malaysia 2017), \"power loss\" (United States 2021), \"community disruption\" (United States 2021), \"destruction\" (China 2016), \"damage\" (United States 2024), and \"collapse\" (United States 2021). These disruptions are often immediate consequences of primary hazards, but are identified as direct pathways to economic loss within the data.\n\nFollowing closely are **storm-related natural hazards** and **accidents**, each appearing 8 times as direct drivers of economic losses. Storm-related hazards encompass phenomena such as \"severe storms\" (United States 2023), \"severe weather\" (United States 2022), \"tornadoes\" (United States 2014), \"hurricane\" (United States 2023), \"hurricanes\" (U.S. Virgin Islands 2017), \"",
       "evidenceTriplets": [
         {
           "source": "disaster",
@@ -8225,41 +8225,41 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T03:11:17.315053+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
-        "Water",
-        "Rail",
         "Flood",
-        "Explosion (Industrial)",
-        "Miscellaneous accident (General)",
-        "Storm",
-        "Road",
         "Mass movement (wet)",
-        "Explosion (Miscellaneous)",
         "Wildfire",
+        "Water",
+        "Explosion (Industrial)",
         "Air",
+        "Road",
+        "Collapse (Miscellaneous)",
+        "Miscellaneous accident (General)",
         "Fire (Miscellaneous)",
-        "Earthquake",
-        "Collapse (Miscellaneous)"
+        "Explosion (Miscellaneous)",
+        "Storm",
+        "Rail",
+        "Earthquake"
       ],
       "relatedRegions": [
-        "Oceania",
-        "East Asia & Pacific",
-        "Other",
-        "Latin America & Caribbean",
+        "Southeast Asia",
         "North Africa & Middle East",
         "Europe",
-        "Southeast Asia",
-        "Sub-Saharan Africa",
+        "North America",
+        "Other",
+        "Oceania",
+        "Latin America & Caribbean",
         "South Asia",
-        "North America"
+        "Sub-Saharan Africa",
+        "East Asia & Pacific"
       ]
     },
     {
       "id": "insight_09",
       "question": "How effective are early warning systems in preventing casualties, according to the causal triplet data?",
-      "narrative": "Based on the provided causal triplet data from 2014-2024, early warning systems appear to be highly effective in preventing human harm across various disaster types and geographies. Multiple triplets explicitly show that \"early warning,\" \"timely warning,\" \"early warning system,\" \"effective warning,\" \"national public alerting system,\" \"early alerts,\" \"accurate warning,\" \"emergency warning,\" and \"emergency alert\" prevent \"casualties,\" \"fatalities,\" \"deaths,\" or \"injuries.\" This effectiveness is demonstrated for storms in Germany (2021), France (2023), Switzerland (2023), China (2015), Canada (2018), and the United States (2015); for floods in Israel (2018), New Zealand (2023), Somalia (2023), Brazil (2019), Thailand (2022), France (2023), Japan (2024), and the Russian Federation (2018); and for an earthquake in Indonesia (2016).\n\nThe data also reinforces this by showing a negative consequence when early warning is absent: \"lack of early warning\" caused \"fatalities\" during a storm in Mexico in 2015. While the triplets consistently indicate prevention of casualties, fatalities, deaths, and injuries by various forms of early warnings and alerts, the dataset does not quantify the *degree* of effectiveness (e.g., number of lives saved) but rather confirms the causal link of prevention.\n\nTherefore, according to this specific dataset, early warning systems are consistently associated with the prevention of human harm from a range of natural hazards across diverse countries from 2015 to 2024. The evidence strongly supports their positive role in disaster risk reduction.",
+      "narrative": "Based on the causal triplet data from the crisesStorylinesRAG dataset (2014-2024), early warning systems and related alerts are consistently identified as effective in preventing human harm across various disaster types and geographic regions. The retrieved triplets repeatedly demonstrate direct causal links where \"early warning,\" \"timely warning,\" \"early warning system,\" \"effective warning,\" \"accurate warning,\" \"emergency warning,\" \"emergency alert,\" \"early alerts,\" and \"national public alerting system\" prevent negative outcomes such as casualties, fatalities, deaths, and injuries.\n\nThis preventive role is observed for diverse hazards including storms (e.g., Germany 2021, France 2023, Switzerland 2023, China 2015, Mexico 2015, Canada 2018, United States 2015), floods (e.g., Israel 2018, New Zealand 2023, Somalia 2023, Brazil 2019, Thailand 2022, France 2023, Japan 2024, Russian Federation 2018), and even earthquakes (e.g., Indonesia 2016). Furthermore, the data reinforces the importance of such systems by highlighting a specific instance in Mexico (2015) where the \"lack of early warning\" directly \"causes fatalities\" during a storm.\n\nWhile the dataset strongly indicates that early warning systems are effective in preventing casualties by consistently showing a \"prevents\" relationship, it does not provide quantitative measures or percentages to determine *the degree* of effectiveness. The evidence solely demonstrates a qualitative preventive effect across numerous events between 2015 and 2024, confirming their critical role in disaster risk reduction.",
       "evidenceTriplets": [
         {
           "source": "early warning",
@@ -8456,28 +8456,28 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 19,
       "relatedDisasterTypes": [
-        "Storm",
         "Flood",
+        "Storm",
         "Earthquake"
       ],
       "relatedRegions": [
-        "Oceania",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
-        "Sub-Saharan Africa",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
         "North America",
-        "East Asia & Pacific"
+        "Latin America & Caribbean",
+        "Sub-Saharan Africa"
       ]
     },
     {
       "id": "insight_10",
       "question": "What patterns emerge in drought and food insecurity causal chains across Sub-Saharan Africa?",
-      "narrative": "Within Sub-Saharan Africa from 2014 to 2024, drought emerges as a direct and significant driver of food insecurity and related crises. The data consistently shows `drought → causes → food insecurity` (South Africa, 2017), `drought → causes → hunger` (Uganda, 2022), `drought → causes → food loss` (Angola, 2017), and `drought → causes → malnutrition` (Angola, 2017). These direct impacts are frequently compounded by intermediate causal chains, such as `drought → causes → crop failures` or `crop devastation` (Somalia, 2021; South Africa, 2015; Malawi, 2015), which in turn lead to `hunger` (Somalia, 2021). Similarly, `drought → causes → water shortages` or `water scarcity` (Somalia, 2021; Ethiopia, 2022; South Africa, 2017) directly contributes to `hunger` (Somalia, 2021) and `water-borne diseases` (Angola, 2017). The loss of livelihoods is also evident through `drought → causes → livestock deaths` (Somalia, 2021), leading to `economic damage` (Somalia, 2021). The primary antecedent causes for drought identified across the region are various forms of insufficient rainfall, including `poor rainy season`, `poor rainfall`, `failed rainy season`, `delayed rains`, `less rainfall`, and `below-average rainfall` (Somalia, Ethiopia, Gambia, South Africa), with `El Niño` also noted in Angola (2017).\n\nBeyond direct food security impacts, drought in Sub-Saharan Africa is broadly linked to severe socio-economic consequences. The retrieved data highlights `drought → causes → economic damage` (South Africa, 2015), `economic distress` (Gambia, 2015), `job loss` (South Africa, 2015), and `displacement` (Mozambique, 2021). Additionally, broader societal disruptions such as `exploitation`, `violence`, `abuse`, `neglect`, and `gender-based violence` are observed in Eswatini (2016) as consequences of drought. Mortality is also directly attributed to `drought` in Somalia (2014).\n\nTo address these widespread impacts, the dataset identifies several preventative and mitigative measures, particularly for food insecurity. These include `humanitarian assistance` (Mozambique, 2021; Somalia, 2014), `irrigation schemes` and `drought-resistant crops` (Malawi, 2015) to prevent crop failure and food insecurity. Other interventions focused on hunger reduction are `emergency aid`, `early funding`, `safe water`, `emergency preparedness`, `start-up inputs`, and `school meals` (Uganda, 2022; Somalia, 2021). These insights collectively demonstrate a complex web of direct and indirect causal chains linking drought to food insecurity and broader societal vulnerabilities across Sub-Saharan Africa, along with identified critical interventions.",
+      "narrative": "Across Sub-Saharan Africa between 2014 and 2024, drought consistently emerges as a direct and indirect cause of food insecurity, hunger, and malnutrition. Direct causal links show drought leading to food insecurity in South Africa (2017) and Mozambique (2021), and to hunger in Uganda (2022). More frequently, drought triggers a chain of impacts: it causes crop devastation (South Africa 2015), crop failure (Malawi 2015), and widespread crop failures (Somalia 2021), which subsequently result in hunger (Somalia 2021) and food loss (Angola 2017). Similarly, drought causes water scarcity (South Africa 2017) and water shortages (Somalia 2021, Ethiopia 2022), with water shortages then directly causing hunger (Somalia 2021). The widespread impact on agricultural production also extends to livestock deaths in Somalia (2021) and ultimately culminates in malnutrition (Angola 2017) and mortality (Somalia 2014).\n\nThe primary drivers of drought events across the region are predominantly related to inadequate rainfall patterns. Specific instances highlight poor rainy season (Somalia 2014), poor rainfall (Somalia 2021), less rainfall (South Africa 2017), below-average rainfall (South Africa 2015), failed rainy season (Ethiopia 2022), and delayed rains (Gambia 2015) as direct causes of drought. Beyond rainfall deficits, the El Niño phenomenon was identified as a cause of drought in Angola (2017).\n\nTo counteract these impacts, a range of preventative and mitigating measures are highlighted in the data. Humanitarian assistance consistently prevents food insecurity (Mozambique 2021), malnutrition (Somalia 2014), and mortality (Somalia 2014). More targeted interventions include emergency aid, early funding, and safe water provision (all Somalia 2021), along with school meals and start-up inputs (Uganda 2022) to prevent hunger. Agricultural strategies like irrigation schemes and drought-resistant crops (Malawi 2015) are effective in preventing food insecurity and crop failure. Furthermore, early warning systems (Somalia 2014) and emergency preparedness (Uganda 2022) are crucial for preventing mortality and hunger, respectively.",
       "evidenceTriplets": [
         {
           "source": "drought",
@@ -9484,24 +9484,24 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
         "Drought"
       ],
       "relatedRegions": [
-        "East Asia & Pacific",
-        "Latin America & Caribbean",
         "Southeast Asia",
+        "East Asia & Pacific",
+        "North America",
+        "Latin America & Caribbean",
         "Sub-Saharan Africa",
-        "South Asia",
-        "North America"
+        "South Asia"
       ]
     },
     {
       "id": "insight_11",
       "question": "What structural and governance factors most commonly appear as root causes across all disaster types?",
-      "narrative": "Based on the retrieved triplets, the most commonly appearing root causes across various disaster types can be categorized into factors related to societal vulnerability and the inadequacy of governance-related disaster management capacities.\n\nThe concept of `vulnerability` is the most frequently cited direct root cause, appearing in nine triplets (e.g., vulnerability → causes → infrastructure damage, homelessness, displacement, humanitarian crisis, fatalities, exposure). This is observed across earthquakes, storms, floods, and fires in countries such as Peru (2021), Madagascar (2024), Somalia (2020), Haiti (2021), South Africa (2023), and Türkiye (2023). While often a condition itself, its repeated appearance as a direct cause of negative outcomes highlights its role as an underlying factor influenced by structural and governance deficiencies, making communities susceptible to impacts. The data further shows `previous crisis` (Guinea, 2017) and `climate factors` (Madagascar, 2024) can cause vulnerability, suggesting deeper systemic drivers.\n\nBeyond `vulnerability`, the dataset strongly indicates that the *absence or inadequacy* of various governance-related measures is a pervasive root cause. Terms such as `disaster preparedness` (4 times), `disaster risk reduction` (6 times), `disaster management` (3 times), and `disaster mitigation` (5 times) are consistently shown to *prevent* negative impacts like infrastructure damage, economic damage, fatalities, and injuries across a wide range of disaster types and countries. For instance, `lack of preparedness` is explicitly cited as causing fatalities (Nepal, 2015) and infrastructure damage (Fiji, 2018). Other governance factors whose presence prevents negative outcomes include `disaster planning` (India, 2019), `effective institutions` (Brazil, 2019), `consistent governance` (Korea, Republic of, 2022), and `national disaster policy` (Rwanda, 2023). Collectively, the implicit or explicit lack of such proactive governance and risk management capacities represents a significant and widespread root cause of disaster impacts globally.\n\nRegarding more direct structural factors, `poor infrastructure` (Nepal, 2015, Earthquake) and `lack of infrastructure` (Afghanistan, 2022, Earthquake) are identified as causes of infrastructure damage and severity, respectively. Other structural or systemic failures mentioned include `instability` (Zambia, 2023, Collapse) causing rescue complications, `organizational failures` (India, 2018, Rail) leading to disaster, `poverty` (Tanzania, 2019, Road) as a cause of disaster, and `negligence` (Afghanistan, 2023, Earthquake) resulting in humanitarian crises. While less frequent individually than vulnerability or the collective lack of governance measures, these highlight critical structural and systemic weaknesses as root causes of disaster events and their severity.",
+      "narrative": "Based on the retrieved causal triplets from the crisesStorylinesRAG dataset (2014–2024), **vulnerability** emerges as the most commonly appearing structural root cause across various disaster types. It is directly identified in six triplets as causing a range of impacts, including infrastructure damage, homelessness, humanitarian crises, displacement, fatalities, and exposure. This pervasive factor is linked to diverse events such as Earthquakes (Peru, 2021), Floods (Somalia, 2020), Storms (Madagascar, 2024; Haiti, 2021), and Fire (South Africa, 2023), highlighting its broad influence as an underlying condition contributing to disaster outcomes.\n\nBeyond vulnerability, other structural factors appearing as root causes include **poor infrastructure** and **lack of infrastructure**, which are collectively cited twice for causing infrastructure damage and increased severity during Earthquakes in Nepal (2015) and Afghanistan (2022). Similarly, **poverty** is noted once as a cause of disaster in a Road event in Tanzania (2019).\n\nGovernance factors such as **instability**, **negligence**, and **organizational failures** appear less frequently as direct root causes. Instability led to rescue complications during an Industrial Collapse in Zambia (2023), negligence contributed to a humanitarian crisis during an Earthquake in Afghanistan (2023), and organizational failures were a root cause of disaster in a Rail incident in India (2018). While a \"previous crisis\" (Flood | Guinea | 2017) is identified as causing vulnerability, vulnerability itself is the more frequently cited direct structural root cause across the dataset.",
       "evidenceTriplets": [
         {
           "source": "disaster",
@@ -10508,38 +10508,38 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
-        "Rail",
-        "Water",
         "Flood",
+        "Earthquake",
+        "Rail",
         "Storm",
-        "Road",
-        "Mass movement (wet)",
-        "Volcanic activity",
         "Fire (Miscellaneous)",
-        "Collapse (Industrial)",
         "Drought",
-        "Earthquake"
+        "Volcanic activity",
+        "Water",
+        "Collapse (Industrial)",
+        "Road",
+        "Mass movement (wet)"
       ],
       "relatedRegions": [
-        "North America",
-        "Oceania",
         "Other",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
+        "North America",
+        "Latin America & Caribbean",
         "Sub-Saharan Africa",
-        "South Asia",
-        "East Asia & Pacific"
+        "South Asia"
       ]
     },
     {
       "id": "insight_12",
       "question": "What does the data reveal about climate change as a driver across different disaster types and regions?",
-      "narrative": "The retrieved data from the crisesStorylinesRAG dataset demonstrates that climate change, global warming, and related climatic factors are identified as significant drivers of a wide array of disaster types across numerous regions globally between 2014 and 2024. These drivers are explicitly linked to an increase in intensity, severity, and frequency of various hazards. Specifically, the data shows climate change contributing to heavy rains, extreme rainfall, abnormal rainfall, intense downpours, torrential rain, and intensified rain, leading to widespread flooding across countries such as Canada (2019), Colombia (2022), the United States (2022), Spain (2023), Brazil (2021, 2022), Australia (2024), Pakistan (2015, 2020, 2024), Nepal (2021, 2024), Indonesia (2021), Malawi (2018), Croatia (2023), Sierra Leone (2022), United Arab Emirates (2024), and Germany (2024).\n\nBeyond rainfall-induced events, climate change is also identified as a driver of various storm phenomena, including general storm severity (United States, 2024), intense storms (Germany, 2021), hurricanes (United States, 2019, 2024), cyclones (India, 2019; Malawi, 2022), severe thunderstorms (Canada, 2024), tropical cyclones (Madagascar, 2024), and storm intensification (Guatemala, 2020). The data further highlights its role in extreme temperature events, causing extreme heat and heatwaves in the United States (2023), Canada (2018), Pakistan (2024), Bangladesh (2024), and the Republic of Korea (2016), as well as drought in Algeria (2022) and the United States (2022). Additionally, wildfires and mega-fires are attributed to climate change in the United States (2021, 2023), Spain (2017), and Cyprus (2021).\n\nFurthermore, the data explicitly connects climate change to mass movement events, such as floods and mudslides in Tanzania (2023), mass movement in India (2023), high rainfall leading to mass movement in Indonesia (2021), and landslides in Papua New Guinea (2024). It also points to glacier melt as a consequence of climate change in Pakistan (2020), Nepal (2024), and India (2023), which can contribute to glacial lake outburst floods. Overall, the evidence consistently indicates climate change as a pervasive driver of increasingly severe and diverse natural hazards across multiple continents and a broad range of years within the 2014-2024 timeframe.",
+      "narrative": "The crisesStorylinesRAG dataset reveals that \"climate change\" and related terms (global warming, climate crisis, warming, climatic changes, climate variability, local climate change, greenhouse gases, climatic shocks, changing climate, climate factors) are consistently identified as primary drivers for a diverse range of disaster types and associated phenomena across numerous global regions between 2015 and 2024. The evidence strongly connects these climatic shifts to an increase in disaster frequency and severity, impacting a wide geographical area from North and South America to Europe, Africa, Asia, and Oceania.\n\nSpecifically, climate change is shown to drive various forms of **flooding**, including general flooding in Canada (2019), Guyana (2015), Indonesia (2021), Nepal (2021, 2024), Madagascar (2020), and Somalia (2020). It is also linked to specific rainfall anomalies such as record rainfall in Colombia (2022), heavy rains in Spain (2023), Australia (2024), Brazil (2021, 2022), Pakistan (2024), Sierra Leone (2022), and China (2016), extreme rainfall in the United States (2022), abnormal rainfall in Spain (2021), intense downpours in Nepal (2024), intensified rain in the UAE (2024), and torrential rain in Pakistan (2015). Furthermore, climate change contributes to **storms**, including severe storms in the United States (2024), Spain (2020, 2023), Italy (2023), India (2023), and Germany (2021), hurricanes in the United States (2019, 2024), severe thunderstorms in Canada (2024), cyclones in India (2019) and Malawi (2022), tropical cyclones in Madagascar (2024), and overall storm intensification in Guatemala (2020).\n\nBeyond water-related hazards, the data indicates climate change as a cause of **extreme temperature events**, such as extreme heat in the United States (2023) and Italy (2022), heatwaves in Pakistan (2024), Bangladesh (2024), and Canada (2018), and general heat waves in the United States (2021). It is also identified as a driver for **wildfires** in the United States (2023), Spain (2017), and Cyprus (2021), as well as **mass movements** like mudslides in Tanzania (2023), landslides in Papua New Guinea (2024), and general mass movement in India (2023). Climate change further causes **droughts** in Algeria (2022) and the United States (2022), and contributes to **glacier melt** in Pakistan (2020), Nepal (2024), and India (2023), which can lead to glacial lake outburst floods. More broadly, climate change is cited as causing \"intensity increase\" in Mexico (2023), \"erratic weather\" in Viet Nam (2023), \"extreme weather\" in Italy (2022), \"severe weather\" in Türkiye (2021), and \"vulnerability\" in Madagascar (2024). The connection is explicitly made that \"greenhouse gas emissions\" cause \"climate change\" (France, 2019), reinforcing the anthropogenic link.",
       "evidenceTriplets": [
         {
           "source": "climate change",
@@ -11546,29 +11546,29 @@
       "confidenceLabel": "Mixed",
       "model": "gemini-2.5-flash",
       "modelVersion": "gemini-2.5-flash",
-      "runTimestamp": "2026-04-22T02:53:46.527303+00:00",
+      "runTimestamp": "2026-04-22T02:56:14.886991+00:00",
       "tripletsRetrievedCount": 100,
       "relatedDisasterTypes": [
         "Flood",
-        "Extreme temperature",
-        "Glacial lake outburst flood",
-        "Storm",
-        "Road",
-        "Mass movement (wet)",
         "Wildfire",
+        "Storm",
         "Fire (Miscellaneous)",
-        "Drought"
+        "Drought",
+        "Road",
+        "Glacial lake outburst flood",
+        "Extreme temperature",
+        "Mass movement (wet)"
       ],
       "relatedRegions": [
-        "Oceania",
-        "Latin America & Caribbean",
-        "North Africa & Middle East",
-        "Europe",
         "Southeast Asia",
-        "South Asia",
-        "Sub-Saharan Africa",
+        "Oceania",
+        "North Africa & Middle East",
+        "East Asia & Pacific",
+        "Europe",
         "North America",
-        "East Asia & Pacific"
+        "Latin America & Caribbean",
+        "Sub-Saharan Africa",
+        "South Asia"
       ]
     }
   ]

@@ -312,12 +312,35 @@ def main() -> None:
 
     # Generate insights
     run_ts = datetime.now(timezone.utc).isoformat()
+
+    # Load any existing insights so successful ones can be skipped on re-run
+    out_path = DATA_DIR / "insights.json"
+    existing_by_id: dict = {}
+    if out_path.exists():
+        try:
+            with open(out_path) as f:
+                existing = json.load(f)
+            for item in existing.get("insights", []):
+                if item.get("tripletsRetrievedCount", 0) > 0 and len(item.get("narrative", "")) > 50:
+                    existing_by_id[item["id"]] = item
+            if existing_by_id:
+                print(f"  ↩ Skipping {len(existing_by_id)} already-successful insight(s)\n")
+        except Exception:
+            pass
+
     insights_out = []
     total_api_calls = 0
 
     print(f"\nGenerating {len(QUESTIONS)} insights …\n")
     for q in QUESTIONS:
         print(f"  [{q['id']}] {q['question'][:70]}…")
+
+        # Skip if already generated successfully
+        if q["id"] in existing_by_id:
+            insights_out.append(existing_by_id[q["id"]])
+            print(f"    ↩ skipped (already successful)")
+            continue
+
         try:
             retrieved = retrieve_triplets(
                 q["question"], table, embedder, all_triplets,

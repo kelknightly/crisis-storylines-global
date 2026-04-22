@@ -13,11 +13,24 @@ interface Props {
   index: number;
 }
 
+const BORDER_COLOR: Record<string, string> = {
+  "Expert Verified": "border-l-[oklch(0.67_0.1_152)]",
+  "Mixed":           "border-l-[oklch(0.78_0.12_70)]",
+  "Model Generated": "border-l-[oklch(0.6_0.13_15)]",
+};
+
 export default function InsightCard({ insight, index }: Props) {
   const [open, setOpen] = useState(false);
+  const [showFull, setShowFull] = useState(false);
+
+  const paras = insight.narrative ? insight.narrative.split("\n\n").filter(Boolean) : [];
+  const keyFinding = paras[0] ?? "";
+  const restParas = paras.slice(1);
+
+  const borderClass = BORDER_COLOR[insight.confidenceLabel] ?? "border-l-border";
 
   return (
-    <article className="bg-card border border-border rounded-xl overflow-hidden">
+    <article className={`bg-card border border-border border-l-4 ${borderClass} rounded-xl overflow-hidden`}>
       {/* Header */}
       <div className="px-6 pt-6 pb-4">
         <div className="flex items-start gap-3 mb-4">
@@ -43,13 +56,45 @@ export default function InsightCard({ insight, index }: Props) {
         </div>
 
         {/* Narrative */}
-        {insight.narrative ? (
-          <div className="prose prose-sm max-w-none text-foreground/90 leading-relaxed">
-            {insight.narrative.split("\n\n").map((para, i) => (
-              <p key={i} className="mb-3 last:mb-0 text-sm">
-                {para}
+        {keyFinding ? (
+          <div className="space-y-3">
+            {/* Key Finding callout */}
+            <div
+              className="rounded-lg px-4 py-3 border-l-4 text-sm leading-relaxed"
+              style={{
+                background: "oklch(0.97 0.04 70 / 0.55)",
+                borderLeftColor: "oklch(0.78 0.12 70)",
+              }}
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-wider mb-1.5"
+                style={{ color: "oklch(0.58 0.12 70)" }}>
+                Key Finding
               </p>
-            ))}
+              <p className="text-foreground/90">{keyFinding}</p>
+            </div>
+
+            {/* Full analysis expand/collapse */}
+            {restParas.length > 0 && (
+              <>
+                {showFull && (
+                  <div className="prose prose-sm max-w-none text-foreground/80 leading-relaxed pt-1">
+                    {restParas.map((para, i) => (
+                      <p key={i} className="mb-3 last:mb-0 text-sm">{para}</p>
+                    ))}
+                  </div>
+                )}
+                <button
+                  onClick={() => setShowFull((s) => !s)}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showFull ? (
+                    <><ChevronUp className="w-3.5 h-3.5" /> Collapse analysis</>
+                  ) : (
+                    <><ChevronDown className="w-3.5 h-3.5" /> Show full analysis ({restParas.length} more {restParas.length === 1 ? "paragraph" : "paragraphs"})</>
+                  )}
+                </button>
+              </>
+            )}
           </div>
         ) : (
           <p className="text-sm text-muted-foreground italic">
