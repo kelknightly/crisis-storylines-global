@@ -509,18 +509,22 @@ def main() -> None:
     # Top 30 causal drivers (source nodes in "causes" relations)
     driver_freq: Counter = Counter()
     impact_freq: Counter = Counter()
+    preventer_freq: Counter = Counter()
     for t in all_triplets:
         if t["relation"] == "causes":
             driver_freq[t["source"]] += 1
             impact_freq[t["target"]] += 1
+        elif t["relation"] == "prevents":
+            preventer_freq[t["source"]] += 1
 
     top_drivers = [{"name": k, "count": v} for k, v in driver_freq.most_common(30)]
     top_impacts = [{"name": k, "count": v} for k, v in impact_freq.most_common(30)]
+    top_preventers = [{"name": k, "count": v} for k, v in preventer_freq.most_common(30)]
 
     # Heatmap: disaster type × top driver
     TOP_HEATMAP_FACTORS = 20
     heatmap_drivers = [d["name"] for d in top_drivers[:TOP_HEATMAP_FACTORS]]
-    heatmap_impacts = [d["name"] for d in top_impacts[:TOP_HEATMAP_FACTORS]]
+    heatmap_preventers = [d["name"] for d in top_preventers[:TOP_HEATMAP_FACTORS]]
     heatmap_causes: list[dict] = []
     heatmap_prevents: list[dict] = []
 
@@ -529,7 +533,7 @@ def main() -> None:
     for t in all_triplets:
         if t["relation"] == "causes" and t["source"] in heatmap_drivers:
             cause_cells[(t["disasterType"], t["source"])] += 1
-        elif t["relation"] == "prevents" and t["source"] in heatmap_impacts:
+        elif t["relation"] == "prevents" and t["source"] in heatmap_preventers:
             prevent_cells[(t["disasterType"], t["source"])] += 1
 
     for (dtype, factor), cnt in cause_cells.items():

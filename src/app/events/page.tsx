@@ -25,15 +25,16 @@ function SortIcon({ col, active, dir }: { col: string; active: boolean; dir: Sor
 const SEVERITY_ORDER: Record<string, number> = { Low: 0, Medium: 1, High: 2 };
 
 function parseSeverity(s: string): { label: string; detail: string | null } {
-  const m = s.match(/^(High|Medium|Low)(.*)?$/i);
+  const m = s.match(/^(High|Medium|Low|Unknown)([\s,:(].*)?$/i);
   if (m) {
     const raw = m[2]?.trim() ?? "";
-    const detail = raw.startsWith("(") && raw.endsWith(")")
-      ? raw.slice(1, -1).trim()
-      : raw || null;
-    return { label: m[1], detail };
+    const stripped = raw.replace(/^[(,:\s]+/, "").replace(/[)\s]+$/, "").trim();
+    const detail = stripped || null;
+    const label = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+    return { label, detail };
   }
-  return { label: s, detail: null };
+  // Truncated / partial phrase — show Unknown badge with full text as tooltip
+  return { label: "Unknown", detail: s };
 }
 
 export default function EventsPage() {
@@ -88,7 +89,7 @@ function EventsContent() {
     return events.filter((e) => {
       if (filterType && e.disasterType !== filterType) return false;
       if (filterRegion && e.region !== filterRegion) return false;
-      if (filterSeverity && e.severity !== filterSeverity) return false;
+      if (filterSeverity && parseSeverity(e.severity ?? "").label !== filterSeverity) return false;
       if (filterCountry) {
         const q = filterCountry.toLowerCase();
         if (!e.country.toLowerCase().includes(q) && !e.countryIso.toLowerCase().includes(q))
@@ -110,7 +111,7 @@ function EventsContent() {
         case "country": cmp = a.country.localeCompare(b.country); break;
         case "region": cmp = a.region.localeCompare(b.region); break;
         case "severity":
-          cmp = (SEVERITY_ORDER[a.severity] ?? -1) - (SEVERITY_ORDER[b.severity] ?? -1);
+          cmp = (SEVERITY_ORDER[parseSeverity(a.severity ?? "").label] ?? -1) - (SEVERITY_ORDER[parseSeverity(b.severity ?? "").label] ?? -1);
           break;
         case "triplets": cmp = a.triplets.length - b.triplets.length; break;
       }
@@ -163,7 +164,10 @@ function EventsContent() {
                 type="text"
                 placeholder="Name or ISO code…"
                 value={filterCountry}
-                onChange={(e) => setFilterCountry(e.target.value)}
+                onChange={(e) => {
+                  setFilterCountry(e.target.value);
+                  if (e.target.value) setFilterRegion("");
+                }}
                 className="h-8 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
@@ -188,7 +192,10 @@ function EventsContent() {
               <label className="text-xs text-muted-foreground font-medium">Region</label>
               <select
                 value={filterRegion}
-                onChange={(e) => setFilterRegion(e.target.value)}
+                onChange={(e) => {
+                  setFilterRegion(e.target.value);
+                  if (e.target.value) setFilterCountry("");
+                }}
                 className="h-8 rounded-md border border-border bg-background px-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="">All regions</option>

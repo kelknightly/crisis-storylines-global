@@ -51,7 +51,7 @@ export default function AuditPage() {
     : [];
 
   const barData = byTypeEntries.map(([type, stats]) => ({
-    name: type.length > 14 ? type.slice(0, 14) + "…" : type,
+    name: type,
     precision: Math.round(stats.precision * 100),
   }));
 
@@ -118,7 +118,7 @@ export default function AuditPage() {
         )}
 
         {/* Radar + bar charts */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="flex flex-col gap-6">
           <div className="bg-card border border-border rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold text-foreground">
@@ -141,11 +141,11 @@ export default function AuditPage() {
               Precision ranking (bar chart)
             </h2>
             {barData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={320}>
+              <ResponsiveContainer width="100%" height={barData.length * 28 + 20}>
                 <BarChart
                   data={barData}
                   layout="vertical"
-                  margin={{ left: 8, right: 32, top: 0, bottom: 0 }}
+                  margin={{ left: 4, right: 32, top: 0, bottom: 0 }}
                 >
                   <XAxis
                     type="number"
@@ -159,7 +159,7 @@ export default function AuditPage() {
                     dataKey="name"
                     type="category"
                     tick={{ fontSize: 10, fontFamily: "Inter" }}
-                    width={110}
+                    width={220}
                     axisLine={false}
                     tickLine={false}
                   />

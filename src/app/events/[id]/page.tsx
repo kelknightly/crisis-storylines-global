@@ -184,7 +184,7 @@ export default function EventPage() {
               ({event.triplets.length} triplets)
             </span>
           </h2>
-          <ForceGraphViz data={localGraphData} width={700} height={420} alwaysShowLabels />
+          <ForceGraphViz data={localGraphData} width={760} height={520} alwaysShowLabels />
         </div>
       )}
 

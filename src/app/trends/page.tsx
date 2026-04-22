@@ -47,7 +47,7 @@ export default function TrendsPage() {
         description="Aggregate view of causal drivers and prevention factors across all 1,424 disaster events. The heatmap shows frequency of causal factors by disaster type; the network shows the full global causal web."
       />
 
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <div className="w-full px-6 py-8 space-y-8">
         {/* Filters */}
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-sm text-muted-foreground mr-1">Disaster type:</span>
@@ -84,7 +84,7 @@ export default function TrendsPage() {
         </div>
 
         {/* Heatmap */}
-        <div className="bg-card border border-border rounded-xl p-6">
+        <div className="bg-card border border-border rounded-xl p-6" style={{ overflow: "visible" }}>
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-semibold text-foreground">
