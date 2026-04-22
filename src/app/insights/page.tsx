@@ -23,7 +23,7 @@ export default function InsightsPage() {
     <div>
       <PageHeader
         title="AI Insights"
-        description="Pre-generated synthesis of 12 key disaster intelligence questions. Each insight was produced once offline using the Claude LLM with retrieval-augmented generation over the full triplet dataset. No live AI calls are made in this application."
+        description="Pre-generated synthesis of 12 key disaster intelligence questions. Each insight was produced once offline using an LLM with retrieval-augmented generation (RAG) over the full triplet dataset. No live AI calls are made in this application."
       >
         {data && (
           <AiGeneratedBadge
@@ -72,7 +72,7 @@ export default function InsightsPage() {
             <ol className="text-sm text-left inline-block space-y-1 font-mono bg-muted px-5 py-3 rounded-lg">
               <li>1. python scripts/01_download_data.py</li>
               <li>2. python scripts/02_preprocess.py</li>
-              <li>3. ANTHROPIC_API_KEY=... python scripts/03_generate_insights.py</li>
+              <li>3. GEMINI_API_KEY=... python scripts/03_generate_insights.py</li>
             </ol>
           </div>
         ) : (
