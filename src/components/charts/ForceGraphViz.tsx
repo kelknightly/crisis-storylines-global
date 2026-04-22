@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { GraphData } from "@/types";
 
 // react-force-graph-2d uses canvas + browser APIs — must be client-only
@@ -21,9 +21,9 @@ interface Props {
   highlightNodes?: Set<string>;
 }
 
-// Semantic edge colours
-const CAUSES_COLOR = "rgba(98,140,190,0.6)";
-const PREVENTS_COLOR = "rgba(100,170,130,0.6)";
+// Semantic edge colours — strong red for causes, strong green for prevents
+const CAUSES_COLOR = "rgba(220, 38, 38, 0.85)";
+const PREVENTS_COLOR = "rgba(22, 163, 74, 0.85)";
 const NODE_COLOR = "oklch(0.52 0.1 258)";
 const NODE_HIGHLIGHT = "oklch(0.78 0.12 70)";
 
@@ -33,6 +33,17 @@ export default function ForceGraphViz({
   height = 560,
   highlightNodes,
 }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fgRef = useRef<any>(null);
+
+  // Increase charge repulsion so nodes spread out
+  useEffect(() => {
+    const fg = fgRef.current;
+    if (!fg) return;
+    fg.d3Force("charge")?.strength(-280);
+    fg.d3Force("link")?.distance(60);
+    fg.d3ReheatSimulation();
+  }, [data]);
   // Transform our schema → react-force-graph-2d schema (uses `links`)
   const graphData = {
     nodes: data.nodes.map((n) => ({
@@ -95,6 +106,7 @@ export default function ForceGraphViz({
   return (
     <div className="border border-border rounded-lg overflow-hidden bg-white">
       <ForceGraph2D
+        ref={fgRef}
         graphData={graphData}
         width={width}
         height={height}
@@ -109,7 +121,7 @@ export default function ForceGraphViz({
         linkDirectionalArrowLength={4}
         linkDirectionalArrowRelPos={0.9}
         backgroundColor="#ffffff"
-        cooldownTicks={80}
+        cooldownTicks={150}
         nodeLabel={(node: Record<string, unknown>) =>
           `${node.label as string} (${(node.frequency as number) ?? 0} occurrences)`
         }
@@ -118,12 +130,12 @@ export default function ForceGraphViz({
       {/* Legend */}
       <div className="px-4 py-2 border-t border-border flex items-center gap-6 text-xs text-muted-foreground bg-muted/30">
         <div className="flex items-center gap-1.5">
-          <div className="w-6 h-0.5 rounded" style={{ background: CAUSES_COLOR }} />
-          <span>causes</span>
+          <div className="w-6 h-1 rounded" style={{ background: CAUSES_COLOR }} />
+          <span className="font-medium" style={{ color: CAUSES_COLOR }}>causes</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-6 h-0.5 rounded" style={{ background: PREVENTS_COLOR }} />
-          <span>prevents</span>
+          <div className="w-6 h-1 rounded" style={{ background: PREVENTS_COLOR }} />
+          <span className="font-medium" style={{ color: PREVENTS_COLOR }}>prevents</span>
         </div>
         <span className="ml-auto">Node size = global frequency across all events</span>
       </div>

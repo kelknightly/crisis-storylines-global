@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { CountryData } from "@/types";
@@ -15,6 +16,7 @@ function bubbleRadius(count: number, max: number): number {
 }
 
 export default function LeafletMapInner({ countries, height = 440 }: Props) {
+  const router = useRouter();
   const withCoords = countries.filter(
     (c) => c.lat != null && c.lng != null
   ) as (CountryData & { lat: number; lng: number })[];
@@ -50,7 +52,7 @@ export default function LeafletMapInner({ countries, height = 440 }: Props) {
         center={[20, 10]}
         zoom={2}
         style={{ height: "100%", width: "100%" }}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         zoomControl
       >
         <TileLayer
@@ -68,6 +70,10 @@ export default function LeafletMapInner({ countries, height = 440 }: Props) {
               color: "oklch(0.4 0.1 258)",
               fillOpacity: 0.55,
               weight: 1,
+              className: "cursor-pointer",
+            }}
+            eventHandlers={{
+              click: () => router.push(`/events?country=${country.iso}`),
             }}
           >
             <Tooltip>

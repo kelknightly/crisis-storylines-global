@@ -19,6 +19,7 @@ Run: python scripts/03_generate_insights.py
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -31,9 +32,10 @@ from tqdm import tqdm
 load_dotenv()
 
 try:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types as genai_types
 except ImportError:
-    print("✗ google-generativeai package not installed. Run: pip install google-generativeai")
+    print("✗ google-genai package not installed. Run: pip install google-genai")
     sys.exit(1)
 
 # ---------------------------------------------------------------------------
@@ -44,7 +46,7 @@ DATA_DIR = ROOT / "public" / "data"
 MODEL_NAME = "gemini-2.5-flash"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 TOP_K = 20
-MAX_TOKENS = 800
+MAX_TOKENS = 8192
 
 SYSTEM_PROMPT = (
     "You are an expert in Disaster Risk Management and global hazard analysis. "
@@ -219,10 +221,27 @@ def build_context(triplets: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def call_gemini(model: "genai.GenerativeModel", question: str, context: str) -> str:
+def call_gemini(client: "genai.Client", question: str, context: str) -> str:
     user_msg = f"Context (retrieved causal triplets from crisesStorylinesRAG dataset):\n\n{context}\n\nQuestion: {question}"
-    response = model.generate_content(user_msg)
-    return response.text
+    for attempt in range(5):
+        try:
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=user_msg,
+                config=genai_types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    max_output_tokens=MAX_TOKENS,
+                ),
+            )
+            return response.text
+        except Exception as e:
+            if "503" in str(e) or "UNAVAILABLE" in str(e):
+                wait = 10 * (2 ** attempt)
+                print(f"    ⚠ 503 on attempt {attempt + 1}, retrying in {wait}s…")
+                time.sleep(wait)
+            else:
+                raise
+    raise RuntimeError("Gemini API unavailable after 5 retries")
 
 
 def cross_ref_validation(triplets: list[dict], val_data: dict) -> tuple[float, str]:
@@ -263,12 +282,7 @@ def main() -> None:
         print("  Create a .env file with: GEMINI_API_KEY=your-key-here")
         sys.exit(1)
 
-    genai.configure(api_key=api_key)
-    gemini_model = genai.GenerativeModel(
-        model_name=MODEL_NAME,
-        system_instruction=SYSTEM_PROMPT,
-        generation_config=genai.GenerationConfig(max_output_tokens=MAX_TOKENS),
-    )
+    gemini_client = genai.Client(api_key=api_key)
 
     # Load data
     print("\nLoading triplets …")
@@ -285,11 +299,7 @@ def main() -> None:
     embeddings = embedder.encode(texts, show_progress_bar=True, batch_size=256)
 
     print("  Indexing into LanceDB …")
-    db = lancedb.connect("/tmp/crises_lancedb")
-    try:
-        db.drop_table("triplets")
-    except Exception:
-        pass
+    db = lancedb.connect("memory://")
 
     table_data = [
         {"idx": i, "vector": emb.tolist(), "text": texts[i]}
@@ -312,7 +322,7 @@ def main() -> None:
                 TOP_K, q.get("filter")
             )
             context = build_context(retrieved)
-            narrative = call_gemini(gemini_model, q["question"], context)
+            narrative = call_gemini(gemini_client, q["question"], context)
             total_api_calls += 1
 
             confidence_score, confidence_label = cross_ref_validation(retrieved, val_data)

@@ -2,29 +2,42 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ExternalLink, TrendingUp, Globe, Network, Calendar } from "lucide-react";
+import { ExternalLink, TrendingUp, Globe, Network, Calendar, HelpCircle } from "lucide-react";
 import { fetchStats } from "@/lib/data";
 import type { Stats } from "@/types";
 import WorldMapViz from "@/components/charts/WorldMapViz";
 import DisasterDonut from "@/components/charts/DisasterDonut";
 import YearSparkline from "@/components/charts/YearSparkline";
 import CitationChip from "@/components/CitationChip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 function StatCard({
   label,
   value,
   sub,
   icon: Icon,
+  tooltip,
 }: {
   label: string;
   value: string;
   sub?: string;
   icon: React.ElementType;
+  tooltip?: string;
 }) {
   return (
     <div className="bg-card border border-border rounded-xl p-5">
       <div className="flex items-start justify-between mb-3">
-        <p className="text-sm text-muted-foreground">{label}</p>
+        <div className="flex items-center gap-1">
+          <p className="text-sm text-muted-foreground">{label}</p>
+          {tooltip && (
+            <Tooltip>
+              <TooltipTrigger className="inline-flex items-center focus:outline-none">
+                <HelpCircle className="w-3 h-3 text-muted-foreground/50 hover:text-muted-foreground transition-colors" />
+              </TooltipTrigger>
+              <TooltipContent side="bottom">{tooltip}</TooltipContent>
+            </Tooltip>
+          )}
+        </div>
         <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
           <Icon className="w-4 h-4 text-primary" />
         </div>
@@ -124,6 +137,7 @@ export default function HomePage() {
             value={loading ? "—" : (stats?.totalTriplets ?? 0).toLocaleString()}
             sub="causes + prevents"
             icon={Network}
+            tooltip="A causal triplet is a 3-part statement [source → relation → target] extracted by an LLM from disaster news. The relation is 'causes' or 'prevents' — e.g., deforestation → causes → landslide. See Methodology for the full definition."
           />
           <StatCard
             label="Countries covered"
@@ -158,7 +172,7 @@ export default function HomePage() {
               <div className="h-[400px] bg-muted/30 rounded-lg animate-pulse" />
             )}
             <p className="text-xs text-muted-foreground mt-3">
-              Circle size proportional to event count. Hover markers for details.
+              Circle size proportional to event count. Scroll to zoom; click a marker to explore events for that country.
             </p>
           </div>
 

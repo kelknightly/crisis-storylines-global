@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import type { HeatmapCell } from "@/types";
 
 interface Props {
@@ -8,14 +9,14 @@ interface Props {
   title?: string;
 }
 
-// Pastel palette steps from white → primary
+// White → yellow → orange → red heatmap scale
 const STEPS = [
-  "oklch(0.99 0 0)",
-  "oklch(0.94 0.025 258)",
-  "oklch(0.86 0.055 258)",
-  "oklch(0.77 0.085 258)",
-  "oklch(0.65 0.1 258)",
-  "oklch(0.52 0.1 258)",
+  "#ffffff",
+  "#fef9c3",
+  "#fde68a",
+  "#f97316",
+  "#dc2626",
+  "#7f1d1d",
 ];
 
 function cellColor(value: number, max: number): string {
@@ -25,12 +26,15 @@ function cellColor(value: number, max: number): string {
 }
 
 function cellTextColor(value: number, max: number): string {
-  if (max === 0 || value === 0) return "oklch(0.6 0 0)";
+  if (max === 0 || value === 0) return "#9ca3af";
   const ratio = value / max;
-  return ratio > 0.5 ? "oklch(0.99 0 0)" : "oklch(0.2 0.015 250)";
+  // White text on dark orange/red cells, dark text on light cells
+  return ratio > 0.55 ? "#ffffff" : "#1e293b";
 }
 
 export default function CausalHeatmap({ data, title }: Props) {
+  const router = useRouter();
+
   const { disasterTypes, factors, lookup, maxCount } = useMemo(() => {
     const types = [...new Set(data.map((d) => d.disasterType))].sort();
     const factors = [...new Set(data.map((d) => d.factor))].slice(0, 20);
@@ -47,10 +51,10 @@ export default function CausalHeatmap({ data, title }: Props) {
     );
   }
 
-  const CELL_W = 120;
-  const CELL_H = 32;
-  const LABEL_W = 160;
-  const HEADER_H = 120;
+  const CELL_W = 90;
+  const CELL_H = 34;
+  const LABEL_W = 200;
+  const HEADER_H = 140;
   const svgWidth = LABEL_W + factors.length * CELL_W;
   const svgHeight = HEADER_H + disasterTypes.length * CELL_H;
 
@@ -60,20 +64,19 @@ export default function CausalHeatmap({ data, title }: Props) {
         <h3 className="text-sm font-semibold text-foreground mb-3">{title}</h3>
       )}
       <svg width={svgWidth} height={svgHeight} className="block">
-        {/* Column headers (rotated) */}
+        {/* Column headers (rotated -45°) */}
         {factors.map((factor, fi) => (
           <g key={factor} transform={`translate(${LABEL_W + fi * CELL_W + CELL_W / 2}, ${HEADER_H - 8})`}>
             <text
               transform="rotate(-45)"
               textAnchor="end"
-              className="text-xs"
               style={{
-                fontSize: 10,
-                fill: "oklch(0.45 0.015 250)",
+                fontSize: 11,
+                fill: "#334155",
                 fontFamily: "var(--font-inter)",
               }}
             >
-              {factor.length > 22 ? factor.slice(0, 22) + "…" : factor}
+              {factor}
             </text>
           </g>
         ))}
@@ -83,17 +86,17 @@ export default function CausalHeatmap({ data, title }: Props) {
           <g key={dtype} transform={`translate(0, ${HEADER_H + ri * CELL_H})`}>
             {/* Row label */}
             <text
-              x={LABEL_W - 8}
+              x={LABEL_W - 10}
               y={CELL_H / 2}
               dominantBaseline="middle"
               textAnchor="end"
               style={{
-                fontSize: 11,
-                fill: "oklch(0.3 0.015 250)",
+                fontSize: 12,
+                fill: "#1e293b",
                 fontFamily: "var(--font-inter)",
               }}
             >
-              {dtype.length > 18 ? dtype.slice(0, 18) + "…" : dtype}
+              {dtype}
             </text>
 
             {/* Cells */}
@@ -102,7 +105,14 @@ export default function CausalHeatmap({ data, title }: Props) {
               const bg = cellColor(count, maxCount);
               const fg = cellTextColor(count, maxCount);
               return (
-                <g key={factor}>
+                <g
+                  key={factor}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    router.push(`/events?disasterType=${encodeURIComponent(dtype)}`)
+                  }
+                >
+                  <title>{`${dtype} × ${factor}: ${count}`}</title>
                   <rect
                     x={LABEL_W + fi * CELL_W + 1}
                     y={1}
@@ -110,7 +120,7 @@ export default function CausalHeatmap({ data, title }: Props) {
                     height={CELL_H - 2}
                     rx={3}
                     fill={bg}
-                    stroke="oklch(0.91 0.007 80)"
+                    stroke="#e2e8f0"
                     strokeWidth={0.5}
                   />
                   {count > 0 && (
@@ -123,7 +133,7 @@ export default function CausalHeatmap({ data, title }: Props) {
                         fontSize: 10,
                         fill: fg,
                         fontFamily: "var(--font-jetbrains-mono)",
-                        fontWeight: 500,
+                        fontWeight: 600,
                       }}
                     >
                       {count}
@@ -143,12 +153,13 @@ export default function CausalHeatmap({ data, title }: Props) {
           {STEPS.map((color, i) => (
             <div
               key={i}
-              className="w-5 h-3 rounded-sm border border-border/50"
+              className="w-6 h-3 rounded-sm border border-border/40"
               style={{ background: color }}
             />
           ))}
         </div>
         <span>High (frequency of causal factor)</span>
+        <span className="ml-4 text-muted-foreground/60">Click a cell to explore events →</span>
       </div>
     </div>
   );

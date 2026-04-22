@@ -118,6 +118,49 @@ export default function MethodologyPage() {
               <code className="font-mono bg-muted px-1 rounded">causes</code> or{" "}
               <code className="font-mono bg-muted px-1 rounded">prevents</code>.
             </p>
+
+            {/* Triplet definition callout */}
+            <div className="bg-primary/5 border-l-4 border-primary/40 rounded-r-lg px-4 py-3 space-y-1.5">
+              <p className="font-semibold text-foreground text-xs uppercase tracking-wide">
+                What is a causal triplet?
+              </p>
+              <p>
+                A <span className="font-semibold">causal triplet</span> is a structured
+                3-part statement{" "}
+                <code className="font-mono bg-muted px-1 rounded">
+                  [source → relation → target]
+                </code>{" "}
+                extracted by an LLM from each disaster news storyline. The{" "}
+                <code className="font-mono bg-muted px-1 rounded">source</code> and{" "}
+                <code className="font-mono bg-muted px-1 rounded">target</code> are causal
+                factors (e.g., <em>deforestation</em>, <em>landslide</em>), and{" "}
+                <code className="font-mono bg-muted px-1 rounded">relation</code> is
+                constrained to either{" "}
+                <code className="font-mono bg-muted px-1 rounded">causes</code> or{" "}
+                <code className="font-mono bg-muted px-1 rounded">prevents</code>.
+                Triplets form the edges of the causal knowledge graph and are the primary
+                unit of analysis throughout this dashboard. Definition per{" "}
+                <a
+                  href="https://github.com/jrcf7/crisesStorylinesRAG"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Ronco et al. (crisesStorylinesRAG)
+                </a>.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Examples:{" "}
+                <code className="font-mono bg-muted px-1 rounded">
+                  deforestation → causes → landslide
+                </code>
+                {" · "}
+                <code className="font-mono bg-muted px-1 rounded">
+                  early warning system → prevents → loss of life
+                </code>
+              </p>
+            </div>
+
             <div className="bg-muted/40 border border-border rounded-lg px-4 py-3 space-y-1">
               <p>
                 <span className="font-semibold">Original LLM (storylines + triplets):</span>{" "}
